@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.1755" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1755" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_membership.xml" value="0.24" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_personal_trainer.xml" value="0.24" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_schedule.xml" value="0.24" />
-        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main_menu.xml" value="0.264" />
-        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/round_radius.xml" value="0.2295" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main_menu.xml" value="0.2" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_register.xml" value="0.264" />
       </map>
     </option>
   </component>
