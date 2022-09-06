@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Home"
+        android:id="@+id/menu_home"
         android:icon="@drawable/ic_home"/>
     <item android:title="Membership"
+        android:id="@+id/menu_membership"
         android:icon="@drawable/ic_membership"/>
     <item android:title="Trainer"
+        android:id="@+id/menu_trainer"
         android:icon="@drawable/ic_personal_trainer"/>
     <item android:title="Schedule"
+        android:id="@+id/menu_schedule"
         android:icon="@drawable/ic_schedule"/>
 </menu>

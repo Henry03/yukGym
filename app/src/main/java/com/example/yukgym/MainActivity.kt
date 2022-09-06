@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             if(username == "admin" && password == "yukgym"){
-                val moveHome = Intent(this, HomeFragment::class.java)
-                startActivity(moveHome)
+                val moveMenu = Intent(this, MainMenu::class.java)
+                startActivity(moveMenu)
             }else{
                 return@OnClickListener
             }

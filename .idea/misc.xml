@@ -9,12 +9,15 @@
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_personal_trainer.xml" value="0.24" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/ic_schedule.xml" value="0.24" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/drawable/round_radius.xml" value="0.2295" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_main_menu.xml" value="0.2" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/fragment_home.xml" value="0.1640625" />
         <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/fragment_membership.xml" value="0.1640625" />
-        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/menu/navigation_bar.xml" value="0.16302083333333334" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/fragment_schedule.xml" value="0.12132725430597771" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/layout/fragment_trainer.xml" value="0.12132725430597771" />
+        <entry key="..\:/Kuliah/Semester V/Pemrograman Berbasis Platform/Tugas Besar/app/src/main/res/menu/navigation_bar.xml" value="0.1" />
       </map>
     </option>
   </component>

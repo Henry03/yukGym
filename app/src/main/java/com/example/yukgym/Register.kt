@@ -53,8 +53,12 @@ class Register : AppCompatActivity() {
         }
 
         btnRegister.setOnClickListener(View.OnClickListener {
+
+            val intent = Intent(this, MainActivity::class.java)
+            val mbundle = Bundle()
+
             val Name: String = name.editText?.getText().toString()
-            val Nik: String = noTelp.editText?.getText().toString()
+            val NoTelp: String = noTelp.editText?.getText().toString()
             val Email: String = email.editText?.getText().toString()
             val BirthDate: String = birthDate.editText?.getText().toString()
             val Password: String = password.editText?.getText().toString()
@@ -67,8 +71,8 @@ class Register : AppCompatActivity() {
                 checkSignUp = false
             }
 
-            if(Nik.isEmpty()){
-                noTelp.setError("NIK must be filled with text")
+            if(NoTelp.isEmpty()){
+                noTelp.setError("Phone Number must be filled with text")
                 checkSignUp = false
             }
 
@@ -96,10 +100,17 @@ class Register : AppCompatActivity() {
                 passwordConfirm.setError("Password Confirmation doesn't match with password")
                 checkSignUp = false
             }
-            if(Nik.length != 16) {
-                noTelp.setError("NIK length must be 16 digit")
+            if(NoTelp.length != 16) {
+                noTelp.setError("Phone Number length must be 16 digit")
             }
 
+            mbundle.putString("name", Name)
+            mbundle.putString("notelp", NoTelp)
+            mbundle.putString("email", Email)
+            mbundle.putString("birthdate", BirthDate)
+            mbundle.putString("password", Password)
+
+            intent.putExtra("signup", mbundle)
             if(checkSignUp == true){
                 val movetoLogin = Intent(this, MainActivity::class.java)
                 startActivity(movetoLogin)
