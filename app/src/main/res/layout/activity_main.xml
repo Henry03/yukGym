@@ -46,15 +46,15 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="171dp"
+        android:layout_height="145dp"
         android:layout_marginStart="169dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="170dp"
+        android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -63,7 +63,7 @@
         android:layout_marginStart="127dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="128dp"
-        android:backgroundTint="#E21C21"
+        android:backgroundTint="#EA6C36"
         android:fontFamily="@font/poppins_medium"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,8 +97,23 @@
             android:layout_marginTop="152dp"
             android:fontFamily="@font/poppins_medium"
             android:text="Sign Up now"
-            android:textColor="#E21C21"
+            android:textColor="#EA6C36"
             android:textStyle="bold" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvYukGym"
+        android:layout_width="105dp"
+        android:layout_height="66dp"
+        android:fontFamily="@font/jolly_lodger"
+        android:text="yukGYM"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#E21C21"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="214dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
