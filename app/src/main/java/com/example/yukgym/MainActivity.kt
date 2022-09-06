@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
 
 
             if (username.isEmpty()) {
-                inputUsername.setError("Username must be filles with text")
+                inputUsername.setError("Username must be filled with text")
                 checkLogin = false
             }
 
 
             if(password.isEmpty()){
-                inputPassword.setError("Password must be filles with text")
+                inputPassword.setError("Password must be filled with text")
                 checkLogin = false
             }
 
