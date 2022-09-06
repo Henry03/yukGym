@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 class Register : AppCompatActivity() {
 
     private lateinit var name: TextInputLayout
-    private lateinit var nik: TextInputLayout
+    private lateinit var noTelp: TextInputLayout
     private lateinit var email: TextInputLayout
     private lateinit var birthDate: TextInputLayout
     private lateinit var password: TextInputLayout
@@ -32,7 +32,7 @@ class Register : AppCompatActivity() {
         setupHyperlink()
 
         name = findViewById(R.id.ilName)
-        nik = findViewById(R.id.ilNIK)
+        noTelp = findViewById(R.id.ilNoTelp)
         email = findViewById(R.id.ilEmail)
         birthDate = findViewById(R.id.ilBirthDate)
         password = findViewById(R.id.ilPassword)
@@ -43,7 +43,7 @@ class Register : AppCompatActivity() {
 
         btnClear.setOnClickListener {
             name.editText?.setText("")
-            nik.editText?.setText("")
+            noTelp.editText?.setText("")
             email.editText?.setText("")
             birthDate.editText?.setText("")
             password.editText?.setText("")
@@ -54,7 +54,7 @@ class Register : AppCompatActivity() {
 
         btnRegister.setOnClickListener(View.OnClickListener {
             val Name: String = name.editText?.getText().toString()
-            val Nik: String = nik.editText?.getText().toString()
+            val Nik: String = noTelp.editText?.getText().toString()
             val Email: String = email.editText?.getText().toString()
             val BirthDate: String = birthDate.editText?.getText().toString()
             val Password: String = password.editText?.getText().toString()
@@ -68,7 +68,7 @@ class Register : AppCompatActivity() {
             }
 
             if(Nik.isEmpty()){
-                nik.setError("NIK must be filled with text")
+                noTelp.setError("NIK must be filled with text")
                 checkSignUp = false
             }
 
@@ -97,7 +97,7 @@ class Register : AppCompatActivity() {
                 checkSignUp = false
             }
             if(Nik.length != 16) {
-                nik.setError("NIK length must be 16 digit")
+                noTelp.setError("NIK length must be 16 digit")
             }
 
             if(checkSignUp == true){
