@@ -7,57 +7,16 @@
     tools:context=".MainMenu">
     <!--    #F79523-->
     <!--    #565658-->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="@drawable/round_radius"
-        android:backgroundTint="#565658"
-        android:orientation="horizontal"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/navigation_bar"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemTextColor="#F79523"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="1"
-            app:tint="#F79523"
-            app:srcCompat="@drawable/ic_home" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_membership"
-            app:tint="#F79523" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_weight="1"
-            app:tint="#F79523"
-            app:srcCompat="@drawable/ic_personal_trainer" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="1"
-            app:tint="#F79523"
-            app:srcCompat="@drawable/ic_schedule" />
-    </LinearLayout>
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"

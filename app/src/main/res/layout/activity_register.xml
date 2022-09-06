@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -71,7 +72,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilNIK"
+        android:id="@+id/ilNoTelp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -84,10 +85,11 @@
         app:layout_constraintTop_toBottomOf="@+id/ilName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etNIK"
+            android:id="@+id/etNoTelp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="NIK" />
+            android:inputType="number"
+            android:hint="Phone Number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -100,13 +102,14 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilNIK">
+        app:layout_constraintTop_toBottomOf="@+id/ilNoTelp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etBirthDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Birth Date" />
+            android:hint="Birth Date"
+            android:inputType="date"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -138,13 +141,15 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilEmail">
+        app:layout_constraintTop_toBottomOf="@+id/ilEmail"
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -157,13 +162,15 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilPassword">
+        app:layout_constraintTop_toBottomOf="@+id/ilPassword"
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password Confirm" />
+            android:hint="Password Confirm"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -196,5 +203,5 @@
             android:fontFamily="@font/poppins_medium"
             android:text="SignUp" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
