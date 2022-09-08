@@ -11,12 +11,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
-class MainActivity : AppCompatActivity() {
+class ActivityLogin : AppCompatActivity() {
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
     private lateinit var mainLayout: ConstraintLayout
 
-
+    var mBundle: Bundle? = null
+    lateinit var Nama: String
+    lateinit var Email: String
+    lateinit var BirthDate: String
+    lateinit var Password: String
+    lateinit var NoTelp: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,10 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
         }
 
+        getBundle()
+
         btnLogin.setOnClickListener(View.OnClickListener {
+
             val username: String = inputUsername.editText?.getText().toString()
             val password: String = inputPassword.editText?.getText().toString()
 
@@ -54,12 +62,19 @@ class MainActivity : AppCompatActivity() {
                 inputPassword.setError("Password must be filled with text")
             }
 
-            if(username == "admin" && password == "yukgym"){
-                val moveMenu = Intent(this, MainMenu::class.java)
+            if(username == "admin" && password == "yukgym") {
+                val moveMenu = Intent(this, ActivityHome::class.java)
+                startActivity(moveMenu)
+            }else if(mBundle == null) {
+                Snackbar.make(mainLayout, "Register first", Snackbar.LENGTH_LONG).show()
+            }else if(username == Nama && password == Password || username == "admin" && password == "yukgym"){
+                val moveMenu = Intent(this, ActivityHome::class.java)
                 startActivity(moveMenu)
             }else{
+                Snackbar.make(mainLayout, "Username or Password incorrect", Snackbar.LENGTH_LONG).show()
                 return@OnClickListener
             }
+
 
 
         })
@@ -69,8 +84,25 @@ class MainActivity : AppCompatActivity() {
         linkTextView.setMovementMethod(LinkMovementMethod.getInstance())
 
         linkTextView.setOnClickListener(View.OnClickListener {
-            val movetoRegister = Intent(this, Register::class.java)
-            startActivity(movetoRegister)
+            val movetoActivityRegister = Intent(this, ActivityRegister::class.java)
+            startActivity(movetoActivityRegister)
         })
     }
+
+    fun getBundle(){
+        //Mengambil bundle dari activity sebelumnya dengan menggunakan key register mBundle = intent.getBundleExtra("signup")!!
+        if(intent.getBundleExtra("signup") != null) {
+            mBundle = intent.getBundleExtra("signup")
+
+            // Mengambil data dari bundle
+            Nama = mBundle?.getString("name")!!
+            Email = mBundle?.getString("email")!!
+            BirthDate = mBundle?.getString("birthdate")!!
+            Password = mBundle?.getString("password")!!
+            NoTelp = mBundle?.getString("notelp")!!
+        }
+
+
+    }
+
 }

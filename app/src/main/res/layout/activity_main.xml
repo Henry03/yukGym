@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainLayout"
-    tools:context=".MainActivity">
+    tools:context=".ActivityLogin">
 
 <!--    #F79523-->
 <!--    #565658-->
@@ -15,13 +15,15 @@
         android:layout_width="250dp"
         android:layout_height="114dp"
         android:layout_marginStart="74dp"
-        android:layout_marginTop="70dp"
         android:layout_marginEnd="74dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.176"
+        app:srcCompat="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ilUsername"
@@ -55,6 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ilUsername"
         app:endIconMode="password_toggle">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
@@ -66,6 +69,39 @@
 
             />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ilPassword">
+
+        <Button
+            android:id="@+id/btnClear"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="Clear Fields"
+            android:textColor="#F79523" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:backgroundTint="#F79523"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Login" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="213dp"
@@ -98,36 +134,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilPassword">
-
-        <Button
-            android:id="@+id/btnClear"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:text="Clear Fields"
-            android:textColor="#F79523" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="#F79523"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Login" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

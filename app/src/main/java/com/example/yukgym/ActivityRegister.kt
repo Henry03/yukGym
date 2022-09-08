@@ -1,18 +1,17 @@
 package com.example.yukgym
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class Register : AppCompatActivity() {
+class ActivityRegister : AppCompatActivity() {
 
     private lateinit var name: TextInputLayout
     private lateinit var noTelp: TextInputLayout
@@ -54,7 +53,7 @@ class Register : AppCompatActivity() {
 
         btnRegister.setOnClickListener(View.OnClickListener {
 
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityLogin::class.java)
             val mbundle = Bundle()
 
             val Name: String = name.editText?.getText().toString()
@@ -100,8 +99,9 @@ class Register : AppCompatActivity() {
                 passwordConfirm.setError("Password Confirmation doesn't match with password")
                 checkSignUp = false
             }
-            if(NoTelp.length != 16) {
-                noTelp.setError("Phone Number length must be 16 digit")
+            if(NoTelp.length != 12) {
+                noTelp.setError("Phone Number length must be 12 digit")
+                checkSignUp = false
             }
 
             mbundle.putString("name", Name)
@@ -111,9 +111,12 @@ class Register : AppCompatActivity() {
             mbundle.putString("password", Password)
 
             intent.putExtra("signup", mbundle)
+
+
             if(checkSignUp == true){
-                val movetoLogin = Intent(this, MainActivity::class.java)
-                startActivity(movetoLogin)
+//                val movetoLogin = Intent(this, MainActivity::class.java)
+//                startActivity(movetoLogin)
+                startActivity(intent)
             }else{
                 return@OnClickListener
             }
@@ -128,7 +131,7 @@ class Register : AppCompatActivity() {
         linkTextView.setMovementMethod(LinkMovementMethod.getInstance())
 
         linkTextView.setOnClickListener(View.OnClickListener {
-            val movetoLogin = Intent(this, MainActivity::class.java)
+            val movetoLogin = Intent(this, ActivityLogin::class.java)
             startActivity(movetoLogin)
         })
     }

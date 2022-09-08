@@ -9,19 +9,19 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 
-class HomeActivity : AppCompatActivity() {
+class ActivityHome : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        changeFragment(HomeFragment())
+        changeFragment(FragmentClass())
     }
 
     fun changeFragment(fragment: Fragment?){
         if(fragment != null){
             getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.layoutHome, fragment)
+                .replace(R.id.layout_fragment, fragment)
                 .commit()
         }
     }
@@ -36,10 +36,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.menu_home){
             // Jika menu yang dipilih adalah Mahasiswa maka ganti fragmentnya dengan FragmentMahasiswa
-            changeFragment(HomeFragment())
+            changeFragment(FragmentHome())
         }else if(item.itemId == R.id.menu_membership){
             // Jika menu yang dipilih adalah Dosen maka ganti fragmentnya dengan FragmentDosen
-            changeFragment(MembershipFragment())
+            changeFragment(FragmentClass())
         }else if(item.itemId == R.id.menu_trainer){
             changeFragment(TrainerFragment())
         }else if(item.itemId == R.id.menu_schedule){
@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
         }
         else{
             // Jika menu yang dipilih adalah menu Exit, maka tampilkan sebuah dialog
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this@HomeActivity)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this@ActivityHome)
             builder.setMessage("Are you sure want to exit?")
                 .setPositiveButton("YES", object : DialogInterface.OnClickListener{
                     override fun onClick(dialogInterface: DialogInterface, i: Int){
