@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yukgym.entity.Class;
 
@@ -25,7 +24,7 @@ public class RVClassAdapter (private val data: Array<Class>) : RecyclerView.Adap
         holder.Category.text = currentItem.category
         holder.ClassName.text = currentItem.name
         holder.Duration.text = currentItem.duration
-        holder.Image.drawable = currentItem.images.toDrawable()
+        holder.Image.setImageResource(currentItem.images)
     }
 
     override fun getItemCount(): Int{
@@ -38,6 +37,6 @@ public class RVClassAdapter (private val data: Array<Class>) : RecyclerView.Adap
         val Category : TextView = itemView.findViewById(R.id.tvCategory)
         val ClassName : TextView = itemView.findViewById(R.id.tvClassName)
         val Duration : TextView = itemView.findViewById(R.id.tvDuration)
-        var Image : ImageView = itemView.findViewById(R.id.imageView)
+        val Image : ImageView = itemView.findViewById(R.id.imageView)
     }
 }

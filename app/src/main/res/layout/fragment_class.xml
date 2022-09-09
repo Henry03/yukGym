@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context=".FragmentClass">
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/bottomNavigationView"
         android:layout_gravity="bottom"
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="#F79523"

@@ -1,22 +1,27 @@
 package com.example.yukgym
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class ActivityRegister : AppCompatActivity() {
 
     private lateinit var name: TextInputLayout
     private lateinit var noTelp: TextInputLayout
     private lateinit var email: TextInputLayout
-    private lateinit var birthDate: TextInputLayout
+    private lateinit var birthDate: EditText
     private lateinit var password: TextInputLayout
     private lateinit var passwordConfirm: TextInputLayout
     private lateinit var btnRegister: Button
@@ -27,24 +32,39 @@ class ActivityRegister : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        setTitle("Login")
         setupHyperlink()
 
         name = findViewById(R.id.ilName)
         noTelp = findViewById(R.id.ilNoTelp)
         email = findViewById(R.id.ilEmail)
-        birthDate = findViewById(R.id.ilBirthDate)
+        birthDate = findViewById(R.id.etBirthDate)
         password = findViewById(R.id.ilPassword)
         passwordConfirm = findViewById(R.id.ilPasswordConfirm)
         btnRegister = findViewById(R.id.btnSignUp)
         btnClear = findViewById(R.id.btnClear)
         signUpLayout = findViewById(R.id.signUpLayout)
 
+        birthDate.setOnClickListener{
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                // Display Selected date in textbox
+                birthDate.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+
+            }, year, month, day)
+
+            dpd.show()
+        }
+
         btnClear.setOnClickListener {
             name.editText?.setText("")
             noTelp.editText?.setText("")
             email.editText?.setText("")
-            birthDate.editText?.setText("")
+            birthDate.setText("")
             password.editText?.setText("")
             passwordConfirm.editText?.setText("")
 
@@ -59,7 +79,7 @@ class ActivityRegister : AppCompatActivity() {
             val Name: String = name.editText?.getText().toString()
             val NoTelp: String = noTelp.editText?.getText().toString()
             val Email: String = email.editText?.getText().toString()
-            val BirthDate: String = birthDate.editText?.getText().toString()
+            val BirthDate: String = birthDate.getText().toString()
             val Password: String = password.editText?.getText().toString()
             val PasswordConfirm: String = passwordConfirm.editText?.getText().toString()
 
@@ -77,6 +97,11 @@ class ActivityRegister : AppCompatActivity() {
 
             if(Email.isEmpty()){
                 email.setError("E-mail must be filled with text")
+                checkSignUp = false
+            }
+
+            if (!Email.matches(Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"))) {
+                email.setError("Email tidak valid")
                 checkSignUp = false
             }
 
@@ -134,5 +159,6 @@ class ActivityRegister : AppCompatActivity() {
             val movetoLogin = Intent(this, ActivityLogin::class.java)
             startActivity(movetoLogin)
         })
+
     }
 }

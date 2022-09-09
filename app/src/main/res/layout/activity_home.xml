@@ -6,9 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ActivityHome">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/layout_fragment"
+    <FrameLayout
+        android:id="@+id/flFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomNavigationView"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemTextColor="#F79523"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/navigation_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

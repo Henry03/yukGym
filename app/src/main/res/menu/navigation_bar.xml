@@ -4,8 +4,8 @@
     <item android:title="Home"
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_home"/>
-    <item android:title="Membership"
-        android:id="@+id/menu_membership"
+    <item android:title="Class"
+        android:id="@+id/menu_class"
         android:icon="@drawable/ic_membership"/>
     <item android:title="Trainer"
         android:id="@+id/menu_trainer"

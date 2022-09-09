@@ -16,17 +16,19 @@
         <activity
             android:name=".ActivityHome"
             android:exported="false"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.YukGym.NoActionBar" />
+            android:label="@string/title_activity_home" />
         <activity
             android:name=".MainMenu"
             android:exported="false" />
         <activity
             android:name=".ActivityRegister"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.YukGym.NoActionBar"
+            />
         <activity
             android:name=".ActivityLogin"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.YukGym.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
