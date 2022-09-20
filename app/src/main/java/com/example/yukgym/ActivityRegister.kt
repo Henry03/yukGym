@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.tasks.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -159,6 +160,10 @@ class ActivityRegister : AppCompatActivity() {
             val movetoLogin = Intent(this, ActivityLogin::class.java)
             startActivity(movetoLogin)
         })
+
+    }
+
+    fun bindItem(task: Task){
 
     }
 }

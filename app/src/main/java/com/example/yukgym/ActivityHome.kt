@@ -12,7 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ActivityHome : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
