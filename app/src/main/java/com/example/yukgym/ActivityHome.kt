@@ -19,7 +19,7 @@ class ActivityHome : AppCompatActivity() {
 
         val fragmentHome = FragmentHome()
         val fragmentClass = FragmentClass()
-        val fragmentTrainer = FragmentTrainer()
+        val fragmentProfile = FragmentProfile()
         val fragmentSchedule = FragmentSchedule()
 
         setCurrentFragment(fragmentHome)
@@ -37,7 +37,7 @@ class ActivityHome : AppCompatActivity() {
                     true
                 }
                 R.id.menu_trainer -> {
-                    setCurrentFragment(fragmentTrainer)
+                    setCurrentFragment(fragmentProfile)
                     true
                 }
                 R.id.menu_schedule -> {

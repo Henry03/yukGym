@@ -1,5 +1,6 @@
 package com.example.yukgym
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +11,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yukgym.databinding.ActivityRegisterBinding
+import com.example.yukgym.room.Register
 import com.google.android.gms.tasks.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -20,7 +23,6 @@ import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class ActivityRegister : AppCompatActivity() {
     private lateinit var itemBinding : ActivityRegisterBinding
-
     private lateinit var signUpLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,5 +142,26 @@ class ActivityRegister : AppCompatActivity() {
         })
 
     }
+    private fun setupRecyclerView() {
+        noteAdapter = NoteAdapter(arrayListOf(), object :
+            NoteAdapter.OnAdapterListener {
+            override fun onClick(note: Note) {
+                //Toast.makeText(applicationContext, note.title,
+//                Toast.LENGTH_SHORT).show()
+                intentEdit(note.id, Constant.TYPE_READ)
+            }
 
+            override fun onUpdate(note: Note) {
+                intentEdit(note.id, Constant.TYPE_UPDATE)
+            }
+
+            override fun onDelete(note: Note) {
+                deleteDialog(note)
+            }
+        })
+        list_note.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = noteAdapter
+        }
+    }
 }
