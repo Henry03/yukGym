@@ -6,17 +6,20 @@ import androidx.room.*
 interface RegisterDao {
 
     @Insert
-    suspend fun addRegister(register: Register)
+    fun addRegister(register: Register)
 
     @Update
-    suspend fun updateNote(register: Register)
+    fun updateNote(register: Register)
 
     @Delete
-    suspend fun deleteNote(register: Register)
+    fun deleteNote(register: Register)
 
     @Query("SELECT * FROM register")
-    suspend fun getRegister() : List<Register>
+    fun getRegister() : List<Register>
 
     @Query("SELECT * FROM register WHERE id =:register_id")
-    suspend fun getRegister(register_id: String) : List<Register>
+    fun getRegister(register_id: Int) : Register
+
+    @Query("SELECT * FROM register WHERE name = :register_name and password = :register_password")
+    fun getRegister(register_name: String, register_password: String) : Register
 }

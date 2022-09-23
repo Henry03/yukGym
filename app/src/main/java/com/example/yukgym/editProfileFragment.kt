@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FragmentProfile : Fragment() {
+class editProfileFragment : Fragment() {
     val db by lazy{activity?.let { RegisterDB(it )}  }
 
     var sharedPreferences: SharedPreferences? = null

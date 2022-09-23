@@ -20,43 +20,56 @@
         app:menu="@menu/navigation_bar" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="370dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="#eeeeee"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="#eeeeee"
-        app:cardCornerRadius="10dp"
-        tools:layout_editor_absoluteY="27dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="93dp"
+            android:layout_height="96dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            tools:src="@tools:sample/avatars" />
+            android:layout_gravity="center_horizontal"
+            android:tint="#F79523"
+            tools:src="@drawable/profile" />
 
         <TextView
             android:id="@+id/tvname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
             android:text="Name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="160dp"/>
+            android:textColor="#222222"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvemail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
-            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="150dp"
             android:text="E-mail"
             android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#F79523"
+            android:layout_marginTop="180dp"
+            android:text="Edit Profile" />
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

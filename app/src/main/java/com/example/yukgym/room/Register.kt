@@ -8,13 +8,11 @@ import androidx.room.PrimaryKey
 data class Register (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val register: String,
     val name: String,
     val notelp: String,
     val email: String,
     val birthdate: String,
-    val password: String,
-    val passwordconfirm: String
+    val password: String
 ){
 
 }

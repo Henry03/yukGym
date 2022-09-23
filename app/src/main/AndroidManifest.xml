@@ -13,13 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YukGym"
         tools:targetApi="31">
-        <activity
-            android:name=".RegisterAdapter"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".ActivityLogin"
             android:exported="false"

@@ -28,7 +28,7 @@ abstract class RegisterDB : RoomDatabase() {
             context.applicationContext,
             RegisterDB::class.java,
             "register12345.db"
-        ).build()
+            ).allowMainThreadQueries().build()
 
     }
 

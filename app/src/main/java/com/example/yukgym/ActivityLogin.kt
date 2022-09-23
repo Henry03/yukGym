@@ -1,6 +1,8 @@
 package com.example.yukgym
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -8,26 +10,26 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.yukgym.room.Register
+import com.example.yukgym.room.RegisterDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class ActivityLogin : AppCompatActivity() {
+    val db by lazy{ RegisterDB(this) }
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
     private lateinit var mainLayout: ConstraintLayout
 
-    var mBundle: Bundle? = null
-    lateinit var Nama: String
-    lateinit var Email: String
-    lateinit var BirthDate: String
-    lateinit var Password: String
-    lateinit var NoTelp: String
+    private val id = "id"
+    private var access = false
+    var sharedPreferences:SharedPreferences? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setTitle("Login")
         setupHyperlink()
 
         inputUsername = findViewById(R.id.ilUsername)
@@ -47,8 +49,6 @@ class ActivityLogin : AppCompatActivity() {
             Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
         }
 
-        getBundle()
-
         btnLogin.setOnClickListener(View.OnClickListener {
 
             val username: String = inputUsername.editText?.getText().toString()
@@ -62,23 +62,28 @@ class ActivityLogin : AppCompatActivity() {
                 inputPassword.setError("Password must be filled with text")
             }
 
-            if(username == "admin" && password == "yukgym") {
+            inputUsername = findViewById(R.id.ilUsername)
+            inputPassword = findViewById(R.id.ilPassword)
+            val registerDB: Register = db.registerDao().getRegister(inputUsername.editText?.getText().toString(), inputPassword.editText?.getText().toString())
+
+            if (registerDB != null) {
+                sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
+                var editor = sharedPreferences?.edit()
+                editor?.putString("id", registerDB.id.toString())
+                editor?.commit()
                 val moveMenu = Intent(this, ActivityHome::class.java)
                 startActivity(moveMenu)
-            }else if(mBundle == null) {
-                Snackbar.make(mainLayout, "Register first", Snackbar.LENGTH_LONG).show()
-            }else if(username == Nama && password == Password || username == "admin" && password == "yukgym"){
-                val moveMenu = Intent(this, ActivityHome::class.java)
-                startActivity(moveMenu)
-            }else{
-                Snackbar.make(mainLayout, "Username or Password incorrect", Snackbar.LENGTH_LONG).show()
+            } else {
+                Snackbar.make(
+                    mainLayout,
+                    "Username or Password incorrect",
+                    Snackbar.LENGTH_LONG
+                ).show()
                 return@OnClickListener
             }
-
-
-
         })
     }
+
     fun setupHyperlink(){
         val linkTextView = findViewById<TextView>(R.id.btnSignUp)
         linkTextView.setMovementMethod(LinkMovementMethod.getInstance())
@@ -88,21 +93,4 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(movetoActivityRegister)
         })
     }
-
-    fun getBundle(){
-        //Mengambil bundle dari activity sebelumnya dengan menggunakan key register mBundle = intent.getBundleExtra("signup")!!
-        if(intent.getBundleExtra("signup") != null) {
-            mBundle = intent.getBundleExtra("signup")
-
-            // Mengambil data dari bundle
-            Nama = mBundle?.getString("name")!!
-            Email = mBundle?.getString("email")!!
-            BirthDate = mBundle?.getString("birthdate")!!
-            Password = mBundle?.getString("password")!!
-            NoTelp = mBundle?.getString("notelp")!!
-        }
-
-
-    }
-
 }
