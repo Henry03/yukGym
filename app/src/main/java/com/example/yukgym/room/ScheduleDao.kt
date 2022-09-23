@@ -17,6 +17,6 @@ interface ScheduleDao {
     @Query("SELECT * FROM schedule")
     fun getSchedule() : List<Schedule>
 
-    @Query("SELECT * FROM register WHERE id =:Schedule_id")
+    @Query("SELECT * FROM schedule WHERE id =:Schedule_id")
     fun getschedule(Schedule_id: Int) : Schedule
 }

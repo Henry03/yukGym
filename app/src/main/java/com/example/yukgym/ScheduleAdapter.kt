@@ -4,15 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yukgym.room.Schedule
+import kotlinx.android.synthetic.main.activity_schedule_adapter.view.*
 
-class ScheduleAdapter (private val notes: ArrayList<Schedule>, private val listener: OnAdapterListener) :
+class ScheduleAdapter (private val schedule: ArrayList<Schedule>, private val listener: OnAdapterListener) :
     RecyclerView.Adapter<ScheduleAdapter.NoteViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -22,9 +21,12 @@ class ScheduleAdapter (private val notes: ArrayList<Schedule>, private val liste
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = notes[position]
-        holder.view.text_title.text = note.title
-        holder.view.text_title.setOnClickListener{
+        val note = schedule[position]
+        holder.view.tvTitle.text = note.title
+        holder.view.tvDate.text = note.date
+        holder.view.tvActivity.text = note.activity
+
+        holder.view.card.setOnClickListener{
             listener.onClick(note)
         }
         holder.view.icon_edit.setOnClickListener {
@@ -35,12 +37,12 @@ class ScheduleAdapter (private val notes: ArrayList<Schedule>, private val liste
         }
     }
 
-    override fun getItemCount() = notes.size
+    override fun getItemCount() = schedule.size
     inner class NoteViewHolder( val view: View) : RecyclerView.ViewHolder(view)
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Schedule>){
-        notes.clear()
-        notes.addAll(list)
+        schedule.clear()
+        schedule.addAll(list)
         notifyDataSetChanged()
     }
     interface OnAdapterListener {

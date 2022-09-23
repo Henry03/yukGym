@@ -9,7 +9,7 @@ import java.util.Date
 data class Schedule (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String,
+    val title: String,
     val date: String,
     val activity: String
 ){

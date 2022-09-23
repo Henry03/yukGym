@@ -18,6 +18,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation_bar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/activity_schedule_adapter"/>
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="380dp"
+        android:height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="80dp"
+        android:text="Add Schedule"
+        android:backgroundTint="#F79523"/>
 
 
 </FrameLayout>

@@ -13,6 +13,7 @@ import androidx.room.RoomDatabase
 abstract class RegisterDB : RoomDatabase() {
 
     abstract fun registerDao() : RegisterDao
+    abstract fun scheduleDao() : ScheduleDao
 
     companion object{
         @Volatile private var instance : RegisterDB? = null
