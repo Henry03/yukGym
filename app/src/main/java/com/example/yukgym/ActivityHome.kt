@@ -1,6 +1,8 @@
 package com.example.yukgym
 
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -73,9 +75,14 @@ class ActivityHome : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setCurrentFragment(fragment:Fragment)=
+    fun setCurrentFragment(fragment:Fragment)=
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment,fragment)
             commit()
         }
+
+    fun setActivity(activity: AppCompatActivity){
+        val moveActivity = Intent(this, activity::class.java)
+        startActivity(moveActivity)
+    }
 }

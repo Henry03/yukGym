@@ -21,7 +21,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="230dp"
+        android:layout_height="240dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
@@ -38,8 +38,9 @@
             android:layout_height="96dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:tint="#F79523"
-            tools:src="@drawable/profile" />
+            app:tint="#F79523"
+            tools:src="@drawable/profile"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/tvname"
@@ -62,7 +63,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
