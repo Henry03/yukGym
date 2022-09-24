@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "744366745",
+    "project_id": "yukgym-2c577",
+    "storage_bucket": "yukgym-2c577.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744366745:android:3a66e4804ab384801ece08",
+        "android_client_info": {
+          "package_name": "com.example.yukgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744366745-sdkjl7lb9nvsguqa6ibog6l577m0fjkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCldubGNB3hIwAx4Ms53PaH94KDfHxphBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744366745-sdkjl7lb9nvsguqa6ibog6l577m0fjkp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
