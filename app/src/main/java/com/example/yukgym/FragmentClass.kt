@@ -64,6 +64,7 @@ class FragmentClass : Fragment() {
         manager.createNotificationChannel(channel)
 
         val progressMax = kelas.second
+        val GROUP_KEY = "com.example.yukgym"
         //Creating the notification object
         val notification = NotificationCompat.Builder(requireContext(), "channel1")
             .setContentTitle(kelas.name + " class Running")
@@ -73,9 +74,12 @@ class FragmentClass : Fragment() {
             .setOngoing(true)
             .setProgress(100, 0, true)
             .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setGroup(GROUP_KEY)
+            .setGroupSummary(true)
 
 
-        notificationManager.notify(1, notification.build())
+        notificationManager.notify(kelas.id, notification.build())
 
         Thread(Runnable {
             SystemClock.sleep(2000)
@@ -90,12 +94,12 @@ class FragmentClass : Fragment() {
                 notification.setContentText(String.format("%.1f", ((progress.toDouble()/progressMax.toDouble())*100) )+ "%")
                     .setProgress(progressMax, progress, false)
                     .setSilent(true)
-                notificationManager.notify(1, notification.build())
+                notificationManager.notify(kelas.id, notification.build())
             }
             notification.setContentText("Class Complete")
                 .setProgress(0, 0, false)
                 .setOngoing(false)
-            notificationManager.notify(1, notification.build())
+            notificationManager.notify(kelas.id, notification.build())
         }).start()
     }
 }
