@@ -3,17 +3,19 @@ package com.example.yukgym
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.yukgym.room.Constant
 import com.example.yukgym.room.RegisterDB
 import com.example.yukgym.room.Schedule
 import kotlinx.android.synthetic.main.activity_edit_schedule.*
-import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 class ActivityEditSchedule : AppCompatActivity() {
     val db by lazy { RegisterDB(this) }
+    private val CHANNEL_ID = "channel_notification"
+    private val notificationId = 100
+
     private var scheduleId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +48,14 @@ class ActivityEditSchedule : AppCompatActivity() {
                 db.scheduleDao().addSchedule(
                     Schedule(0,etTitle.text.toString(), etDate.text.toString(), etActivity.text.toString())
                 )
+                sendNotificationSave();
                 finish()
         }
         btnUpdate.setOnClickListener {
                 db.scheduleDao().updateSchedule(
                     Schedule(scheduleId,etTitle.text.toString(), etDate.text.toString(), etActivity.text.toString())
                 )
+                sendNotificationEdit();
                 finish()
             }
     }
@@ -68,5 +72,35 @@ class ActivityEditSchedule : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    private fun sendNotificationSave(){
+        val bigtext = etActivity.getText().toString()
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.logo_app)
+            .setContentTitle("Schedule Added")
+            .setContentText(etTitle.getText().toString() + "\n" + etDate.getText().toString())
+            .setColor(-551645)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(bigtext))
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId, builder.build())
+        }
+
+    }
+
+    private fun sendNotificationEdit(){
+        val bigtext = etActivity.getText().toString() + "\n" + etDate.getText().toString()
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.logo_app)
+            .setContentTitle("Schedule Updated")
+            .setContentText(etTitle.getText().toString())
+            .setColor(-551645)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(bigtext))
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId, builder.build())
+        }
+
     }
 }

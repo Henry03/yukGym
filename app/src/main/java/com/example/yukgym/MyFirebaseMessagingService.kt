@@ -1,13 +1,20 @@
 package com.example.yukgym
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.icu.text.CaseMap
+import android.media.RingtoneManager
+import android.os.Build
 import android.view.textclassifier.ConversationActions
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.ktx.remoteMessage
 
-class MyFirebaseMessagingService : MyFirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage : RemoteMessage){
 
         if(remoteMessage.notification != null){
@@ -45,5 +52,6 @@ class MyFirebaseMessagingService : MyFirebaseMessagingService() {
         }
 
     }
+
 
 }

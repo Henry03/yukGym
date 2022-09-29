@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yukgym.room.Constant
 import com.example.yukgym.room.RegisterDB
@@ -21,6 +22,9 @@ import kotlinx.coroutines.withContext
 
 class FragmentSchedule : Fragment() {
     val db by lazy{activity?.let { RegisterDB(it ) }  }
+    private val CHANNEL_ID = "channel_notification"
+    private val notificationId = 100
+
     lateinit var scheduleAdapter: ScheduleAdapter
 
     override fun onCreateView(
@@ -86,8 +90,6 @@ class FragmentSchedule : Fragment() {
         val notes = db?.scheduleDao()!!.getSchedule()
         Log.d("MainActivity","dbResponse: $notes")
         scheduleAdapter.setData( notes )
-
-
     }
     fun setupListener() {
         btnCreate.setOnClickListener{
@@ -102,4 +104,6 @@ class FragmentSchedule : Fragment() {
                 .putExtra("intent_type", intentType)
         )
     }
+
+
 }
