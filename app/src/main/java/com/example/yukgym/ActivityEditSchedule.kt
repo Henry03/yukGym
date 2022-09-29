@@ -74,32 +74,7 @@ class ActivityEditSchedule : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    private fun sendNotificationSave(){
-        val bigtext = etActivity.getText().toString()
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.logo_app)
-            .setContentTitle("Schedule Added")
-            .setContentText(etTitle.getText().toString() + "\n" + etDate.getText().toString())
-            .setColor(-551645)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(bigtext))
-        with(NotificationManagerCompat.from(this)){
-            notify(notificationId, builder.build())
-        }
-
-    }
-
-    private fun sendNotificationEdit(){
-        val bigtext = etActivity.getText().toString() + "\n" + etDate.getText().toString()
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.logo_app)
-            .setContentTitle("Schedule Updated")
-            .setContentText(etTitle.getText().toString())
-            .setColor(-551645)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(bigtext))
-        with(NotificationManagerCompat.from(this)){
-            notify(notificationId, builder.build())
+    
         }
 
     }
