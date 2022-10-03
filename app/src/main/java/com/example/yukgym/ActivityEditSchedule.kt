@@ -73,7 +73,6 @@ class ActivityEditSchedule : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-
     private fun sendNotificationSave(){
         val bigtext = etActivity.getText().toString()
         var builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -99,7 +98,8 @@ class ActivityEditSchedule : AppCompatActivity() {
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(bigtext))
         with(NotificationManagerCompat.from(this)){
-            notify(notificationId, builder.build())
+            notify(notificationId, builder.build())    
+    
         }
 
     }
