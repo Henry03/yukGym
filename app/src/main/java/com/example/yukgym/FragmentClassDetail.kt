@@ -41,8 +41,9 @@ class FragmentClassDetail(detail: GymClass) : Fragment() {
             detailTemp.second
         )
 
-        _binding.handler = FragmentClass()
+//        _binding.handler = FragmentClassDetail(detailTemp)
 //        sendNotification(kelas : GymClass)
+        notificationManager = NotificationManagerCompat.from(requireContext())
 
         return _binding.root
     }
@@ -52,7 +53,7 @@ class FragmentClassDetail(detail: GymClass) : Fragment() {
 
     }
 
-    fun sendNotification() {
+    fun sendNotification(kelas : GymClass) {
         println("saya disini")
         val channel = NotificationChannel(
             "channel1",

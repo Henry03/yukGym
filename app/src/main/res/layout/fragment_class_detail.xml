@@ -9,13 +9,6 @@
         <variable
             name="kelas"
             type="com.example.yukgym.entity.GymClass"/>
-
-        <variable
-            name="handler"
-            type="com.example.yukgym.FragmentClass" />
-        <variable
-            name="test1"
-            type="com.example.yukgym.MainViewModel" />
     </data>
 
 
@@ -91,14 +84,6 @@
             android:layout_marginTop="20dp"
             android:text="Detail" />
 
-        <Button
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="70dp"
-            android:onClick="@{() -> handler.sendNotification(kelas)}"
-            android:text="Start Class" />
     </FrameLayout>
 
 

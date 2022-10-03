@@ -45,7 +45,7 @@ class FragmentClass : Fragment() {
             RVClassAdapter.OnItemClickListener{
             override fun onItemClick(kelas : com.example.yukgym.entity.GymClass) {
 
-//                sendNotification(kelas)
+                sendNotification(kelas)
 
                 (activity as ActivityHome).setCurrentFragment(FragmentClassDetail(kelas))
             }
