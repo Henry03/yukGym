@@ -2,7 +2,7 @@ package com.example.yukgym
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -10,70 +10,65 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yukgym.databinding.FragmentClassDetailBinding
 import com.example.yukgym.entity.GymClass
-import com.example.yukgym.entity.GymClassTemp
-import kotlinx.android.synthetic.main.activity_edit_schedule.*
-import kotlinx.android.synthetic.main.fragment_class.*
 
 
-class FragmentClass : Fragment() {
+class FragmentClassDetail(detail: GymClass) : Fragment() {
     private lateinit var notificationManager: NotificationManagerCompat
     lateinit var rvClassAdapter: RVClassAdapter
     private val CHANNEL_ID = "channel_notification"
     private val notificationId = 100
+    lateinit var _binding : FragmentClassDetailBinding
+    var detailTemp : GymClass = detail;
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         // Menghubungkan layout fragment_dosen.xml dengan fragment ini
-        return inflater.inflate(R.layout.fragment_class, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_detail, container, false)
+        _binding.kelas = GymClass(
+            detailTemp.id,
+            detailTemp.name,
+            detailTemp.category,
+            detailTemp.duration,
+            detailTemp.images,
+            detailTemp.second
+        )
+
+        _binding.handler = FragmentClass()
+//        sendNotification(kelas : GymClass)
+
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
     }
 
-    private fun setupRecyclerView(){
-        notificationManager = NotificationManagerCompat.from(requireContext())
-        rvClassAdapter = RVClassAdapter(GymClass.listOfClass, object:
-            RVClassAdapter.OnItemClickListener{
-            override fun onItemClick(kelas : com.example.yukgym.entity.GymClass) {
-
-//                sendNotification(kelas)
-
-                (activity as ActivityHome).setCurrentFragment(FragmentClassDetail(kelas))
-            }
-        })
-
-        rv_class.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = rvClassAdapter
-        }
-    }
-
-    fun sendNotification(kelas : GymClass) {
-        notificationManager = NotificationManagerCompat.from(requireContext())
+    fun sendNotification() {
+        println("saya disini")
         val channel = NotificationChannel(
             "channel1",
             "hello",
             NotificationManager.IMPORTANCE_HIGH
         )
         val manager =
-            requireActivity().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
-        val progressMax = kelas.second
+        val progressMax = detailTemp.second
         val GROUP_KEY = "com.example.yukgym"
         //Creating the notification object
         val notification = NotificationCompat.Builder(requireContext(), "channel1")
-            .setContentTitle(kelas.name + " class Running")
-            .setContentText(kelas.duration)
+            .setContentTitle(detailTemp.name + " class Running")
+            .setContentText(detailTemp.duration)
             .setSmallIcon(R.drawable.logo_app)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
@@ -84,7 +79,7 @@ class FragmentClass : Fragment() {
             .setGroupSummary(true)
 
 
-        notificationManager.notify(kelas.id, notification.build())
+        notificationManager.notify(detailTemp.id, notification.build())
 
         Thread(Runnable {
             SystemClock.sleep(2000)
@@ -99,12 +94,16 @@ class FragmentClass : Fragment() {
                 notification.setContentText(String.format("%.1f", ((progress.toDouble()/progressMax.toDouble())*100) )+ "%")
                     .setProgress(progressMax, progress, false)
                     .setSilent(true)
-                notificationManager.notify(kelas.id, notification.build())
+                notificationManager.notify(detailTemp.id, notification.build())
             }
             notification.setContentText("Class Complete")
                 .setProgress(0, 0, false)
                 .setOngoing(false)
-            notificationManager.notify(kelas.id, notification.build())
+            notificationManager.notify(detailTemp.id, notification.build())
         }).start()
+    }
+
+    fun test(){
+        println("test")
     }
 }

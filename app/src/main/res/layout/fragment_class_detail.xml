@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="kelas"
+            type="com.example.yukgym.entity.GymClass"/>
+
+        <variable
+            name="handler"
+            type="com.example.yukgym.FragmentClass" />
+        <variable
+            name="test1"
+            type="com.example.yukgym.MainViewModel" />
+    </data>
+
+
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".FragmentClassDetail">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="280dp"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="@color/white">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="#444444"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text='@{kelas.name, default="Name"}' />
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="16dp"
+                android:text='@{kelas.category, default="Category"}' />
+
+            <androidx.cardview.widget.CardView
+                android:backgroundTint="#F79523"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="280dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/duration"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:text='@{kelas.duration, default="1 Min"}' />
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="258dp"
+            android:layout_marginTop="70dp"
+            app:imageResource='@{kelas.images}' />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#444444"
+            android:layout_marginTop="20dp"
+            android:text="Detail" />
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="70dp"
+            android:onClick="@{() -> handler.sendNotification(kelas)}"
+            android:text="Start Class" />
+    </FrameLayout>
+
+
+
+</layout>
