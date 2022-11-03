@@ -1,14 +1,13 @@
 package com.example.yukgym
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -72,6 +71,8 @@ class ActivityHome : AppCompatActivity() {
                 })
                 .show()
         }
+//        val i = Intent(this@ActivityHome, FragmentClass::class.java)
+//        startActivity(i)
         return super.onOptionsItemSelected(item)
     }
 
@@ -80,6 +81,7 @@ class ActivityHome : AppCompatActivity() {
             replace(R.id.flFragment,fragment)
             commit()
         }
+
 
     fun setActivity(activity: AppCompatActivity){
         val moveActivity = Intent(this, activity::class.java)

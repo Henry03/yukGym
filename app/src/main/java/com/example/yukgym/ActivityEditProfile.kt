@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.hardware.Camera
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.yukgym.databinding.ActivityEditProfileBinding
+import com.example.yukgym.hardware.ActivityCamera
+import com.example.yukgym.hardware.CameraView
 import com.example.yukgym.room.Register
 import com.example.yukgym.room.RegisterDB
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +27,9 @@ class ActivityEditProfile : AppCompatActivity() {
     var itemBinding: ActivityEditProfileBinding? = null
     var sharedPreferences: SharedPreferences? = null
     private lateinit var editProfileLayout: FrameLayout
+
+    private var mCamera: Camera? = null
+    private var mCameraView: CameraView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,19 +53,21 @@ class ActivityEditProfile : AppCompatActivity() {
             val dpd = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
                     // Display Selected date in textbox
                     itemBinding?.ilBirthDate?.editText?.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
-
                 },
                 year,
                 month,
                 day
             )
-
             dpd.show()
         }
 
+        itemBinding?.ivProfile?.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, ActivityCamera::class.java)
+
+            startActivity(intent)
+        })
 
         itemBinding?.btnSave?.setOnClickListener(View.OnClickListener {
 
@@ -110,8 +118,8 @@ class ActivityEditProfile : AppCompatActivity() {
                 return@OnClickListener
             }
         })
-    }
 
+    }
 
     private fun setupListener() {
         sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
@@ -129,5 +137,4 @@ class ActivityEditProfile : AppCompatActivity() {
         )
         finish()
     }
-
 }

@@ -19,10 +19,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ilName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
-        android:layout_marginTop="180dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="180dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
@@ -34,10 +34,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ilEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
-        android:layout_marginTop="260dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="260dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
@@ -49,10 +49,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ilPhoneNumber"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
-        android:layout_marginTop="340dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="340dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPhoneNumber"
@@ -64,27 +64,27 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ilBirthDate"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
-        android:layout_marginTop="420dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="420dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etBirthDate"
-            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:hint="Birth Date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="380dp"
+        android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="670dp"
-        android:text="Save"
-        android:backgroundTint="#F79523"/>
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#F79523"
+        android:text="Save" />
 
 
 </FrameLayout>

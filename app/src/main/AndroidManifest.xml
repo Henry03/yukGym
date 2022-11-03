@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.yukgym">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YukGym"
         tools:targetApi="31">
-
+        <activity
+            android:name=".hardware.ActivityCamera"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ActivityEditSchedule"
             android:exported="false">
@@ -21,13 +29,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".ScheduleAdapter"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".ActivityLogin"
             android:exported="false"
@@ -40,7 +42,7 @@
             android:name=".ActivityHome"
             android:exported="false"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.YukGym.NoActionBar"/>
+            android:theme="@style/Theme.YukGym.NoActionBar" />
         <activity
             android:name=".MainMenu"
             android:exported="false" />
