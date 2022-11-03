@@ -31,13 +31,24 @@ class ActivityMaps : AppCompatActivity(){
 
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
 
-        val geoPoint = GeoPoint(-7.78165, 110.414497)
+        val geoPoint1 = GeoPoint(-7.777082, 110.416098)
+        val geoPoint2 = GeoPoint(-7.783122, 110.407405)
+        val geoPoint3 = GeoPoint(-7.775395, 110.415731)
+
         mapView.setMultiTouchControls(true)
-        mapView.controller.animateTo(geoPoint)
+
+        mapView.controller.animateTo(geoPoint1)
+        mapView.controller.animateTo(geoPoint2)
+        mapView.controller.animateTo(geoPoint3)
+
         mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
         mapView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
         mapController = mapView.controller as MapController
-        mapController.setCenter(geoPoint)
+
+        mapController.setCenter(geoPoint1)
+        mapController.setCenter(geoPoint2)
+        mapController.setCenter(geoPoint3)
+
         mapController.zoomTo(15)
 
         getLocationMarker()
@@ -73,7 +84,7 @@ class ActivityMaps : AppCompatActivity(){
             }
         }catch (ignored: IOException) {
             Toast.makeText(
-                this@MainActivity,
+                this@ActivityMaps,
                 "Oops, ada yang tidak beres. Coba ulangi beberapa saat lagi.",
                 Toast.LENGTH_SHORT
             ).show()
