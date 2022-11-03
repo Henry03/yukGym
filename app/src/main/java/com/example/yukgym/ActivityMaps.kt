@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
 import com.example.yukgym.entity.ModelMain
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_main_menu.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -27,7 +27,7 @@ class ActivityMaps : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_maps)
 
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
 
@@ -35,15 +35,15 @@ class ActivityMaps : AppCompatActivity(){
         val geoPoint2 = GeoPoint(-7.783122, 110.407405)
         val geoPoint3 = GeoPoint(-7.775395, 110.415731)
 
-        mapView.setMultiTouchControls(true)
+        mapsView.setMultiTouchControls(true)
 
-        mapView.controller.animateTo(geoPoint1)
-        mapView.controller.animateTo(geoPoint2)
-        mapView.controller.animateTo(geoPoint3)
+        mapsView.controller.animateTo(geoPoint1)
+        mapsView.controller.animateTo(geoPoint2)
+        mapsView.controller.animateTo(geoPoint3)
 
-        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
-        mapView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-        mapController = mapView.controller as MapController
+        mapsView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
+        mapsView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
+        mapController = mapsView.controller as MapController
 
         mapController.setCenter(geoPoint1)
         mapController.setCenter(geoPoint2)
@@ -105,18 +105,18 @@ class ActivityMaps : AppCompatActivity(){
             info.strName = modelList[i].strName
             info.strVicinity = modelList[i].strVicinity
 
-            val marker = Marker(mapView)
+            val marker = Marker(mapsView)
             marker.icon = resources.getDrawable(R.drawable.ic_baseline_location_on_24)
             marker.position = GeoPoint(modelList[i].latLoc, modelList[i].longLoc)
             marker.relatedObject = info
-            marker.infoWindow = CustomInfoWindow(mapView)
+            marker.infoWindow = CustomInfoWindow(mapsView)
             marker.setOnMarkerClickListener { item, arg1 ->
                 item.showInfoWindow()
                 true
             }
 
-            mapView.overlays.add(marker)
-            mapView.invalidate()
+            mapsView.overlays.add(marker)
+            mapsView.invalidate()
         }
     }
 
