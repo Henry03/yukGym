@@ -3,13 +3,35 @@
       {
         "geometry": {
           "location": {
-            "lat": -7.779433,
-            "lng": 110.415782
+            "lat": -7.777082,
+            "lng": 110.416098
             }
           },
-          "name": "kampus 3 Universitas Atma Jaya Yogyakarta",
-          "vicinity": "jln. Barbasari No 43, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
-        }
+          "name": "Freedom Fitness Yogyakarta",
+          "vicinity": "Jl. Babarsari TB 13/4 Catur Tunggal, Depok, Caturtunggal, Kecamatan Depok, Tambak Bayan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+        },
+
+      {
+        "geometry": {
+          "location": {
+            "lat": -7.783122,
+            "lng": 110.407405
+          }
+        },
+        "name": "HBP Fitness & Aerobic",
+        "vicinity": "Jl. Laksda Adisucipto No.29, Ambarukmo, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+      },
+
+      {
+        "geometry": {
+          "location": {
+            "lat": -7.775395,
+            "lng": 110.415731
+          }
+        },
+        "name": "MissFit Studio Gym",
+        "vicinity": "Tambak Bayan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+      }
   
     ],
     "status": "OK"
