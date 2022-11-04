@@ -1,10 +1,10 @@
-package com.example.yukgym
+package com.example.yukgym.hardware
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
-import com.example.yukgym.entity.ModelMain
+import com.example.yukgym.R
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_main_menu.*
 import org.json.JSONException

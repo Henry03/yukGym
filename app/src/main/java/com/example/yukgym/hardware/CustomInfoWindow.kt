@@ -1,6 +1,6 @@
-package com.example.yukgym
+package com.example.yukgym.hardware
 
-import com.example.yukgym.entity.ModelMain
+import com.example.yukgym.R
 import kotlinx.android.synthetic.main.layout_tooltip.view.*
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker

@@ -1,10 +1,9 @@
-package com.example.yukgym.entity
+package com.example.yukgym.hardware
 
 class ModelMain {
-
     lateinit var strName: String
-    lateinit var strVicinity: String
+    lateinit var strVicinity:String
+
     var latLoc = 0.0
     var longLoc = 0.0
-
 }
