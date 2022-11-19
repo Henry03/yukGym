@@ -44,10 +44,10 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val profile = filteredProfileList[position]
-        holder.tvBeratBadan.text = history.beratBadan
-        holder.tvDate.text = history.date
+        holder.tvBeratBadan.text = history.berat_badan
+        // holder.tvDate.text = history.date
         holder.tvAktivitas.text = history.aktivitas
-        holder.tvLamaLatihan.text = history.lamaLatihan
+        holder.tvLamaLatihan.text = history.lama_latihan
 
         holder.btnDelete.setOnClickListener {
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
@@ -84,7 +84,7 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
                     filtered.addAll(historyList)
                 }else{
                     for (profile in historyList){
-                        if(profile.beratBadan.lowercase(Locale.getDefault())
+                        if(profile.berat_badan.lowercase(Locale.getDefault())
                                 .contains(charSequenceString.lowercase(Locale.getDefault()))
 
                         )filtered.add(profile)
@@ -107,14 +107,14 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var tvBeratBadan: TextView
-        var tvDate: TextView
+        // var tvDate: TextView
         var tvAktivitas: TextView
         var tvLamaLatihan: TextView
         var btnDelete: ImageButton
 
         init {
             tvBeratBadan = itemView.findViewById(R.id.tv_beratBadan)
-            tvDate = itemView.findViewById(R.id.tv_date)
+            // tvDate = itemView.findViewById(R.id.tv_date)
             tvAktivitas = itemView.findViewById(R.id.tv_aktivitas)
             tvLamaLatihan = itemView.findViewById(R.id.tv_lamaLatihan)
             btnDelete = itemView.findViewById(R.id.btn_delete)
