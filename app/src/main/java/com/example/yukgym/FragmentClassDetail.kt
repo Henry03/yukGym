@@ -103,8 +103,4 @@ class FragmentClassDetail(detail: GymClass) : Fragment() {
             notificationManager.notify(detailTemp.id, notification.build())
         }).start()
     }
-
-    fun test(){
-        println("test")
-    }
 }

@@ -6,29 +6,38 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.ColorInt
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.yukgym.databinding.ActivityRegisterBinding
-import com.example.yukgym.room.Register
-import com.example.yukgym.room.RegisterDB
+import com.example.yukgym.volley.api.ProfileApi
+import com.example.yukgym.volley.models.Profile
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.gson.Gson
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files.list
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.Collections.list
+import kotlin.collections.HashMap
 
 class ActivityRegister : AppCompatActivity() {
-    val db by lazy { RegisterDB(this) }
+
     var itemBinding : ActivityRegisterBinding? = null
     private lateinit var signUpLayout: ConstraintLayout
     private var registerId : Int = 0
@@ -36,11 +45,17 @@ class ActivityRegister : AppCompatActivity() {
     private val notificationId = 101
     private val CHANNEL_ID = "channel_notification"
 
+    private var queue: RequestQueue? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         itemBinding = ActivityRegisterBinding.inflate(layoutInflater)
 
         setContentView(itemBinding?.root)
+
+        queue = Volley.newRequestQueue(this)
+        signUpLayout = itemBinding!!.signUpLayout
 
         itemBinding?.etBirthDate?.setOnClickListener{
             val c = Calendar.getInstance()
@@ -72,14 +87,12 @@ class ActivityRegister : AppCompatActivity() {
         itemBinding?.btnSignUp?.setOnClickListener(View.OnClickListener {
 
             val intent = Intent(this, ActivityLogin::class.java)
-
             val Name: String = itemBinding?.ilName?.editText?.getText().toString()
             val NoTelp: String = itemBinding?.ilNoTelp?.editText?.getText().toString()
             val Email: String = itemBinding?.ilEmail?.editText?.getText().toString()
             val BirthDate: String = itemBinding?.etBirthDate?.getText().toString()
             val Password: String = itemBinding?.ilPassword?.editText?.getText().toString()
             val PasswordConfirm: String = itemBinding?.ilPasswordConfirm?.editText?.getText().toString()
-
             var checkSignUp = true
 
             if(Name.isEmpty()){
@@ -96,7 +109,8 @@ class ActivityRegister : AppCompatActivity() {
                 itemBinding?.ilEmail?.setError("E-mail must be filled with text")
                 checkSignUp = false
             }
-
+            println(NoTelp)
+            println(Email)
             if (!Email.matches(Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"))) {
                 itemBinding?.ilEmail?.setError("Email tidak valid")
                 checkSignUp = false
@@ -123,7 +137,7 @@ class ActivityRegister : AppCompatActivity() {
             }
 
             if(checkSignUp == true){
-                setupListener()
+                createProfile()
                 createNotificationChannel()
                 sendNotification()
                 Toast.makeText(applicationContext, itemBinding?.etName?.getText().toString() + " registered", Toast.LENGTH_SHORT).show()
@@ -139,12 +153,77 @@ class ActivityRegister : AppCompatActivity() {
         })
     }
 
+    private fun createProfile(){
+        val formatter = DateTimeFormatter.ofPattern("d/MM/yyyy", Locale.ENGLISH)
+        val date = LocalDate.parse(itemBinding?.ilBirthDate?.editText?.getText().toString(), formatter)
 
-    private fun setupListener() {
-        db.registerDao().addRegister(
-            Register(0, itemBinding?.etName?.getText().toString(), itemBinding?.etNoTelp?.text.toString(), itemBinding?.etEmail?.text.toString(), itemBinding?.etBirthDate?.text.toString(), itemBinding?.etPassword?.text.toString())
+        val profile = Profile(
+            itemBinding?.ilName?.editText?.getText().toString(),
+            itemBinding?.ilNoTelp?.editText?.getText().toString(),
+            itemBinding?.ilEmail?.editText?.getText().toString(),
+            date.toString(),
+            itemBinding?.ilPassword?.editText?.getText().toString(),
         )
-        finish()
+
+        val stringRequest: StringRequest =
+            object: StringRequest(Method.POST, ProfileApi.ADD_URL, Response.Listener { response ->
+                val gson = Gson()
+                var profile = gson.fromJson(response,Profile::class.java)
+                println(gson)
+                if(profile != null)
+                    Toast.makeText(this@ActivityRegister, "Register Successfully", Toast.LENGTH_SHORT).show()
+
+                val returnIntent = Intent()
+                setResult(RESULT_OK, returnIntent)
+                finish()
+
+            }, Response.ErrorListener { error ->
+                AlertDialog.Builder(this@ActivityRegister)
+                    .setTitle("Error")
+                    .setMessage(error.message)
+                    .setPositiveButton("OK", null)
+                    .show()
+                try{
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        this,
+                        errors.getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }catch (e: Exception){
+                    Toast.makeText(this@ActivityRegister, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }){
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    println(headers)
+                    return headers
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    val gson = Gson()
+                    val requestBody = gson.toJson(profile)
+                    return requestBody.toByteArray(StandardCharsets.UTF_8)
+                }
+//                override fun getParams(): Map<String, String> {
+//                    val params = HashMap<String, String>()
+//                    params["name"] = itemBinding?.ilName?.editText?.getText().toString()
+//                    params["notelp"] = itemBinding?.ilNoTelp?.editText?.getText().toString()
+//                    params["email"] = itemBinding?.ilEmail?.editText?.getText().toString()
+//                    params["birthdate"] = date.toString()
+//                    params["password"] = itemBinding?.ilPassword?.editText?.getText().toString()
+//                    return params
+//                }
+
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+            }
+        queue!!.add(stringRequest)
     }
 
     private fun createNotificationChannel(){
@@ -192,4 +271,6 @@ class ActivityRegister : AppCompatActivity() {
             notify(notificationId, builder.build())
         }
     }
+
+
 }
