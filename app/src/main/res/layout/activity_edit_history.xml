@@ -21,27 +21,12 @@
             android:hint="Berat Badan" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="120dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="385dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tanggal" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
         android:layout_gravity="center_horizontal"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="504dp">
@@ -57,7 +42,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="200dp"
         android:layout_gravity="center_horizontal"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="504dp">
