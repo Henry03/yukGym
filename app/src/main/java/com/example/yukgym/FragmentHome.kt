@@ -1,5 +1,7 @@
 package com.example.yukgym
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -7,12 +9,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.yukgym.databinding.ActivityHistoryBinding
 import com.example.yukgym.hardware.CustomInfoWindow
 import com.example.yukgym.hardware.ModelMain
+import com.example.yukgym.volley.api.ProfileApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONException
@@ -34,6 +45,10 @@ class FragmentHome : Fragment() {
     var modelMainList: MutableList<ModelMain> = ArrayList()
     lateinit var mapController: MapController
     lateinit var overlayItem: ArrayList<OverlayItem>
+
+    private var queue: RequestQueue? = null
+
+    var sharedPreferences: SharedPreferences? = null
 
 
     private fun getLocationMarker() {
@@ -144,6 +159,48 @@ class FragmentHome : Fragment() {
         mapController.zoomTo(15)
 
         getLocationMarker()
+
+        queue = Volley.newRequestQueue(requireContext())
+
+        sharedPreferences = this.getActivity()?.getSharedPreferences("login", Context.MODE_PRIVATE)
+        val id = sharedPreferences!!.getString("id", "")
+        val token = sharedPreferences!!.getString("token", "")
+        val history = view.findViewById<CardView>(R.id.historyCard)
+
+        val dateTxt :TextView =  view.findViewById(R.id.tv_date)
+        val weightTxt :TextView =  view.findViewById(R.id.tv_weight)
+
+        getHistoryById(id!!.toLong(), token!!, dateTxt, weightTxt)
+
+        history.setOnClickListener(){
+            (activity as ActivityHome).setActivity(ActivityHistory())
+        }
+    }
+
+    private fun getHistoryById(id: Long, token:String, date: TextView, weight : TextView){
+
+        val stringRequest: StringRequest = object :
+            StringRequest(
+                Method.GET, ProfileApi.LATEST_HISTORY + id,
+                { response ->
+                    val jsonObject = JSONObject(response)
+                    val tanggal = jsonObject.getJSONObject("data").getString("tanggal")
+                    val berat = jsonObject.getJSONObject("data").getString("berat_badan")
+                    date.setText(tanggal)
+                    weight.setText(berat +" Kg")
+                },
+                Response.ErrorListener{ error ->
+
+                }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+        }
+        queue!!.add(stringRequest)
     }
 
 }

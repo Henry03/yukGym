@@ -1,6 +1,7 @@
 package com.example.yukgym
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -45,15 +48,30 @@ class FragmentProfile : Fragment() {
         val id = sharedPreferences!!.getString("id", "")
         val token = sharedPreferences!!.getString("token", "")
         val btnEdit : Button = view.findViewById(R.id.btnEdit)
+        val btnLogout : Button = view.findViewById(R.id.btnLogout)
         queue = Volley.newRequestQueue(requireContext())
-        getMahasiswaById(id!!.toLong(), token!!, nameTxt, emailTxt)
+        getHistoryById(id!!.toLong(), token!!, nameTxt, emailTxt)
 
         btnEdit.setOnClickListener(){
             (activity as ActivityHome).setActivity(ActivityEditProfile())
         }
+
+        btnLogout.setOnClickListener(){
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            builder.setMessage("Are you sure want to exit?")
+                .setPositiveButton("YES", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialogInterface: DialogInterface, i: Int){
+                        // Keluar dari aplikasi
+                        logout(token!!)
+                        (activity as ActivityHome).setActivity(ActivityLogin())
+                    }
+                })
+                .show()
+        }
+
     }
 
-    private fun getMahasiswaById(id: Long, token:String, name:TextView, email :TextView){
+    private fun getHistoryById(id: Long, token:String, name:TextView, email :TextView){
         sharedPreferences = this.getActivity()?.getSharedPreferences("login", Context.MODE_PRIVATE)
         println("id" + id)
 
@@ -78,6 +96,44 @@ class FragmentProfile : Fragment() {
                 return headers
             }
         }
+        queue!!.add(stringRequest)
+    }
+
+    private fun logout(token : String) {
+        val stringRequest: StringRequest =
+            object :
+                StringRequest(Method.POST, ProfileApi.LOGOUT, Response.Listener { response ->
+                    val gson = Gson()
+                    val jsonObject = JSONObject(response)
+                    var status = jsonObject.getString("message")
+
+                    if (status != "Logout Succes")
+                        Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT)
+                            .show()
+
+                }, Response.ErrorListener { error ->
+                    try {
+                        val responseBody =
+                            String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        Toast.makeText(
+                            requireContext(),
+                            errors.getString("message"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    headers["Authorization"] = "Bearer $token"
+                    return headers
+                }
+
+            }
         queue!!.add(stringRequest)
     }
 }

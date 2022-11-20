@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:padding="20dp"
-    tools:context=".HistoryAdapter">
+    android:padding="20dp">
     <!--    #F79523-->
     <!--    #565658-->
 

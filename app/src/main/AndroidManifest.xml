@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.yukgym">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,13 @@
         android:theme="@style/Theme.YukGym"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ActivityHistory"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".hardware.ActivityCamera"
             android:exported="false">
@@ -31,7 +38,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ActivityLogin"
             android:exported="false"
@@ -48,8 +54,13 @@
         <activity
             android:name=".MainMenu"
             android:exported="false" />
+
         <activity
             android:name=".ActivityRegister"
+            android:exported="false"
+            android:theme="@style/Theme.YukGym.NoActionBar" />
+        <activity
+            android:name=".ActivityAddEditHistory"
             android:exported="false"
             android:theme="@style/Theme.YukGym.NoActionBar" />
         <activity

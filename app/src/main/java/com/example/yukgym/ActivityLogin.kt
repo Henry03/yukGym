@@ -47,9 +47,16 @@ class ActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        queue = Volley.newRequestQueue(this)
+
+        sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
+        val token = sharedPreferences?.getString("token", "")
+        println(token!!)
+        authCheck(token!!)
+
         setupHyperlink()
 
-        queue = Volley.newRequestQueue(this)
+
         inputUsername = findViewById(R.id.ilUsername)
         inputPassword = findViewById(R.id.ilPassword)
         mainLayout = findViewById(R.id.mainLayout)
@@ -59,6 +66,7 @@ class ActivityLogin : AppCompatActivity() {
 
         btnClear = findViewById(R.id.btnClear)
         btnLogin = findViewById(R.id.btnLogin)
+
 
         btnClear.setOnClickListener {
             inputUsername.editText?.setText("")
@@ -119,24 +127,20 @@ class ActivityLogin : AppCompatActivity() {
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
                 val id = jsonObject.getJSONObject("user").getString("id")
-                val username = jsonObject.getJSONObject("user").getString("username")
-                val notelp = jsonObject.getJSONObject("user").getString("notelp")
-                val birthdate = jsonObject.getJSONObject("user").getString("birthdate")
-                val email = jsonObject.getJSONObject("user").getString("email")
+
+
+                var editor = sharedPreferences?.edit()
+                editor?.putString("token", "null")
+                editor?.commit()
 
                 val token : String = jsonObject.getString("access_token")
-                println(id)
-                if(token != null) {
+
+                if(token != "null") {
                     Toast.makeText(this@ActivityLogin, "Login Successfully", Toast.LENGTH_SHORT)
                         .show()
                     sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
                     var editor = sharedPreferences?.edit()
                     editor?.putString("id",id)
-                    editor?.putString("username", username)
-                    editor?.putString("email", email)
-                    editor?.putString("notelp", notelp)
-                    editor?.putString("birthdate", birthdate)
-
                     editor?.putString("token", token)
                     editor?.commit()
                     val moveMenu = Intent(this, ActivityHome::class.java)
@@ -147,7 +151,12 @@ class ActivityLogin : AppCompatActivity() {
                 finish()
 
             }, Response.ErrorListener { error ->
-                Toast.makeText(this@ActivityLogin, "Username/Password incorrect", Toast.LENGTH_SHORT)
+//                AlertDialog.Builder(applicationContext)
+//                    .setTitle("Error")
+//                    .setMessage(error.message)
+//                    .setPositiveButton("OK", null)
+//                    .show()
+                    Toast.makeText(this@ActivityLogin, "Username/Password incorrect", Toast.LENGTH_SHORT)
                     .show()
             }){
                 @Throws(AuthFailureError::class)
@@ -178,35 +187,24 @@ class ActivityLogin : AppCompatActivity() {
         queue!!.add(stringRequest)
     }
 
-    private fun allProfile(username : String, password : String){
+    private fun authCheck(token: String){
         val stringRequest : StringRequest = object:
-            StringRequest(Method.POST, ProfileApi.LOGIN, Response.Listener { response ->
+            StringRequest(Method.POST, ProfileApi.AUTH, Response.Listener { response ->
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
-                val profile : Profile = gson.fromJson(jsonObject.getJSONObject("access_token").toString(), Profile::class.java)
-                println(profile.toString())
-                if(profile!=null) {
+                val auth : String = jsonObject.getString("message").toString()
+                println(token)
+                if(auth == "Authenticated") {
                     sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
-                    var editor = sharedPreferences?.edit()
-                    editor?.putString("id", profile.toString())
-                    editor?.commit()
                     val moveMenu = Intent(this, ActivityHome::class.java)
                     startActivity(moveMenu)
-
-                    Snackbar.make(
-                        mainLayout,
-                        "Username or Password incorrect",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-
-                }else
-                    Toast.makeText(this@ActivityLogin, "Data Kosong!", Toast.LENGTH_SHORT).show()
+                }
             }, Response.ErrorListener { error ->
-                AlertDialog.Builder(this@ActivityLogin)
-                    .setTitle("Error")
-                    .setMessage(error.message)
-                    .setPositiveButton("OK", null)
-                    .show()
+//                AlertDialog.Builder(this@ActivityLogin)
+//                    .setTitle("Error")
+//                    .setMessage(error.message)
+//                    .setPositiveButton("OK", null)
+//                    .show()
 //                try {
 //                    val responseBody =
 //                        String(error.networkResponse.data, StandardCharsets.UTF_8)
@@ -218,13 +216,13 @@ class ActivityLogin : AppCompatActivity() {
             }){
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["Accept"] = "application/json"
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json";
+                headers["Authorization"] = "Bearer $token"
                 return headers
             }
         }
         queue!!.add(stringRequest)
-        println(stringRequest.body)
     }
 
 }

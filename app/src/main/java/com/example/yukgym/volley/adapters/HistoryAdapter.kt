@@ -2,14 +2,15 @@ package com.example.yukgym.volley.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.yukgym.ActivityAddEditHistory
+import com.example.yukgym.ActivityHistory
 import com.example.yukgym.R
 import com.example.yukgym.volley.models.History
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -37,27 +38,35 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
         return filteredProfileList.size
     }
 
-    fun setProfileList(profileList: Array<History>){
+    fun setHistoryList(profileList: Array<History>){
         this.historyList = profileList.toList()
         filteredProfileList = profileList.toMutableList()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val profile = filteredProfileList[position]
-        holder.tvBeratBadan.text = history.berat_badan
-        // holder.tvDate.text = history.date
-        holder.tvAktivitas.text = history.aktivitas
-        holder.tvLamaLatihan.text = history.lama_latihan
+        val history = filteredProfileList[position]
+        val idUser = context.getSharedPreferences("login", 0).getString("id", "")
+        val token = context.getSharedPreferences("login", 0).getString("token", "")
 
+        holder.etBeratBadan.text = history.berat_badan.toString()
+        holder.etTanggal.text = history.tanggal
+        holder.edAktivitas.text = history.aktivitas
+        holder.etLamaLatihan.text = history.lama_latihan.toString()
+        println(idUser)
+        println(idUser.toString())
+        println(token)
+        println("token" + token.toString())
         holder.btnDelete.setOnClickListener {
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
             materialAlertDialogBuilder.setTitle("Konfirmasi")
                 .setMessage("Apakah anda yakin ingin menghapus history ini?")
                 .setNegativeButton("Batal", null)
                 .setPositiveButton("Hapus"){_,_ ->
-                    if (context is MainActivity) profile.id?.let { it1 ->
+                    if (context is ActivityHistory) history.id?.let { it1 ->
                         context.deleteHistory(
-                            it1
+                            it1,
+                            idUser.toString().toLong(),
+                            token.toString()
                         )
                     }
                 }
@@ -65,11 +74,11 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
 
         }
 
-        holder.cvProfile.setOnClickListener {
-            val i = Intent(context, AddEditActivity::class.java)
-            i.putExtra("id", profile.id)
-            if(context is MainActivity)
-                context.startActivityForResult(i, MainActivity.LAUNCH_ADD_ACTIVITY)
+        holder.cvHistory.setOnClickListener {
+            val i = Intent(context, ActivityAddEditHistory::class.java)
+            i.putExtra("id", history.id)
+            if(context is ActivityHistory)
+                context.startActivityForResult(i, ActivityHistory.LAUNCH_ADD_ACTIVITY)
         }
 
 
@@ -84,7 +93,7 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
                     filtered.addAll(historyList)
                 }else{
                     for (profile in historyList){
-                        if(profile.berat_badan.lowercase(Locale.getDefault())
+                        if(profile.berat_badan.toString().lowercase(Locale.getDefault())
                                 .contains(charSequenceString.lowercase(Locale.getDefault()))
 
                         )filtered.add(profile)
@@ -106,18 +115,20 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var tvBeratBadan: TextView
-        // var tvDate: TextView
-        var tvAktivitas: TextView
-        var tvLamaLatihan: TextView
+        var etBeratBadan: TextView
+        var etLamaLatihan: TextView
+        var etTanggal: TextView
+        var edAktivitas: TextView
         var btnDelete: ImageButton
+        var cvHistory: CardView
 
         init {
-            tvBeratBadan = itemView.findViewById(R.id.tv_beratBadan)
-            // tvDate = itemView.findViewById(R.id.tv_date)
-            tvAktivitas = itemView.findViewById(R.id.tv_aktivitas)
-            tvLamaLatihan = itemView.findViewById(R.id.tv_lamaLatihan)
+            edAktivitas = itemView.findViewById(R.id.tv_aktivitas)
+            etBeratBadan = itemView.findViewById(R.id.tv_beratBadan)
+            etLamaLatihan = itemView.findViewById(R.id.tv_lamaLatihan)
+            etTanggal = itemView.findViewById(R.id.tv_tanggal)
             btnDelete = itemView.findViewById(R.id.btn_delete)
+            cvHistory = itemView.findViewById(R.id.cv_history)
         }
 
     }

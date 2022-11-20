@@ -1,5 +1,7 @@
 package com.example.yukgym.volley.models
 
-class History (val berat_badan: Int, val date: String, val aktivitas: String, val lama_latihan: Int){
+import java.util.*
+
+class History (var user_id:Long, var berat_badan: Float, var aktivitas: String, val lama_latihan: Int, val tanggal: String, val image: String){
     var id: Long? = null
 }

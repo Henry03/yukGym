@@ -53,7 +53,7 @@ class ActivityEditProfile : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
         val id = sharedPreferences?.getString("id", "")
         val token = sharedPreferences?.getString("token", "")
-        getMahasiswaById(id!!.toLong(), token!!.toString())
+        getHistoryById(id!!.toLong(), token!!.toString())
 //        itemBinding?.etName?.setText(db?.registerDao()?.getRegister(id!!.toInt())?.name)
 //        itemBinding?.etEmail?.setText(db?.registerDao()?.getRegister(id!!.toInt())?.email)
 //        itemBinding?.etPhoneNumber?.setText(db?.registerDao()?.getRegister(id!!.toInt())?.notelp)
@@ -69,7 +69,7 @@ class ActivityEditProfile : AppCompatActivity() {
                 this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     // Display Selected date in textbox
-                    itemBinding?.ilBirthDate?.editText?.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+                    itemBinding?.ilBirthDate?.editText?.setText("" + year + "-" + monthOfYear + "-" + dayOfMonth)
                 },
                 year,
                 month,
@@ -153,7 +153,7 @@ class ActivityEditProfile : AppCompatActivity() {
         finish()
     }
 
-    private fun getMahasiswaById(id: Long, token:String){
+    private fun getHistoryById(id: Long, token:String){
         sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
 
         val Username = itemBinding?.ilName?.editText
@@ -210,9 +210,9 @@ class ActivityEditProfile : AppCompatActivity() {
         val stringRequest: StringRequest =
             object: StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id, Response.Listener { response ->
                 val gson = Gson()
-                var mahasiswa = gson.fromJson(response, Profile::class.java)
+                var history = gson.fromJson(response, Profile::class.java)
 
-                if(mahasiswa != null)
+                if(history != null)
                     Toast.makeText(this@ActivityEditProfile, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
 
                 val returnIntent = Intent()
