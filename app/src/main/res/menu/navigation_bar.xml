@@ -7,6 +7,9 @@
     <item android:title="Class"
         android:id="@+id/menu_class"
         android:icon="@drawable/ic_membership"/>
+    <item android:title="QR Code"
+        android:id="@+id/menu_scanner"
+        android:icon="@drawable/ic_baseline_qr_code_scanner"/>
     <item android:title="Schedule"
         android:id="@+id/menu_schedule"
         android:icon="@drawable/ic_schedule"/>

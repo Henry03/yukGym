@@ -1,4 +1,4 @@
-package com.example.yukgym
+package com.example.yukgym.fragment
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,9 +12,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yukgym.ActivityHome
+import com.example.yukgym.R
+import com.example.yukgym.RVClassAdapter
 import com.example.yukgym.entity.GymClass
-import com.example.yukgym.entity.GymClassTemp
-import kotlinx.android.synthetic.main.activity_edit_schedule.*
 import kotlinx.android.synthetic.main.fragment_class.*
 
 
@@ -42,8 +43,8 @@ class FragmentClass : Fragment() {
     private fun setupRecyclerView(){
         notificationManager = NotificationManagerCompat.from(requireContext())
         rvClassAdapter = RVClassAdapter(GymClass.listOfClass, object:
-            RVClassAdapter.OnItemClickListener{
-            override fun onItemClick(kelas : com.example.yukgym.entity.GymClass) {
+            RVClassAdapter.OnItemClickListener {
+            override fun onItemClick(kelas : GymClass) {
 
                 sendNotification(kelas)
 

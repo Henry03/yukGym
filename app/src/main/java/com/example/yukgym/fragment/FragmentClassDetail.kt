@@ -1,4 +1,4 @@
-package com.example.yukgym
+package com.example.yukgym.fragment
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.yukgym.R
+import com.example.yukgym.RVClassAdapter
 import com.example.yukgym.databinding.FragmentClassDetailBinding
 import com.example.yukgym.entity.GymClass
 
@@ -31,7 +33,8 @@ class FragmentClassDetail(detail: GymClass) : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         // Menghubungkan layout fragment_dosen.xml dengan fragment ini
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_class_detail, container, false)
+        _binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_class_detail, container, false)
         _binding.kelas = GymClass(
             detailTemp.id,
             detailTemp.name,

@@ -1,4 +1,4 @@
-package com.example.yukgym
+package com.example.yukgym.fragment
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,16 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yukgym.ActivityEditSchedule
+import com.example.yukgym.R
+import com.example.yukgym.ScheduleAdapter
 import com.example.yukgym.room.Constant
 import com.example.yukgym.room.RegisterDB
 import com.example.yukgym.room.Schedule
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FragmentSchedule : Fragment() {
     val db by lazy{activity?.let { RegisterDB(it ) }  }
@@ -45,7 +43,7 @@ class FragmentSchedule : Fragment() {
 
     private fun setupRecyclerView() {
         scheduleAdapter = ScheduleAdapter(arrayListOf(), object :
-            ScheduleAdapter.OnAdapterListener{
+            ScheduleAdapter.OnAdapterListener {
             override fun onClick(schedule: Schedule) {
                 intentEdit(schedule.id,Constant.TYPE_READ)
             }

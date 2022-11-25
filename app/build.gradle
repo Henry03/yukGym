@@ -78,4 +78,23 @@ dependencies {
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.8'
+
+    // QR Code Scanner
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    // Fancy Toast
+    implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+
+    // Material Dialog
+    implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.3'
+
+    // Lottie Animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // Chart
+    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
+
+    // Fingerprint
+    implementation "de.adorsys.android:finger:1.0.0-rc1"
+    implementation "androidx.biometric:biometric:1.0.0"
 }

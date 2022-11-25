@@ -9,9 +9,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.yukgym.fragment.FragmentClass
+import com.example.yukgym.fragment.FragmentHome
+import com.example.yukgym.fragment.FragmentProfile
+import com.example.yukgym.fragment.FragmentSchedule
+import com.example.yukgym.hardware.ActivityQrReader
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ActivityHome : AppCompatActivity() {
+    private lateinit var swipe_refresh_layout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -35,6 +41,11 @@ class ActivityHome : AppCompatActivity() {
                 }
                 R.id.menu_class -> {
                     setCurrentFragment(fragmentClass)
+                    true
+                }
+                R.id.menu_scanner -> {
+                    startActivity(Intent(this, ActivityQrReader::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 R.id.menu_trainer -> {
@@ -86,5 +97,16 @@ class ActivityHome : AppCompatActivity() {
     fun setActivity(activity: AppCompatActivity){
         val moveActivity = Intent(this, activity::class.java)
         startActivity(moveActivity)
+    }
+
+    private fun swipeToRefresh() {
+        swipe_refresh_layout = findViewById(R.id.swipe_refresh_layout)
+        swipe_refresh_layout.setOnRefreshListener {
+            startActivity(Intent(this, ActivityHome::class.java))
+            finish()
+            overridePendingTransition(0, 0)
+            swipe_refresh_layout.isRefreshing = false
+        }
+
     }
 }

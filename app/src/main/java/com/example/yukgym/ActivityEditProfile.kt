@@ -33,6 +33,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 
 
+
 class ActivityEditProfile : AppCompatActivity() {
     val db by lazy { RegisterDB(this) }
     var itemBinding: ActivityEditProfileBinding? = null
@@ -205,7 +206,8 @@ class ActivityEditProfile : AppCompatActivity() {
             NoTelp?.text.toString(),
             Email?.text.toString(),
             BirthDate?.text.toString(),
-            "1"
+            "1",
+            0
         )
         val stringRequest: StringRequest =
             object: StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id, Response.Listener { response ->

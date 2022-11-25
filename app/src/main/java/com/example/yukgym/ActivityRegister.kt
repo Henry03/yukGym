@@ -163,6 +163,7 @@ class ActivityRegister : AppCompatActivity() {
             itemBinding?.ilEmail?.editText?.getText().toString(),
             date.toString(),
             itemBinding?.ilPassword?.editText?.getText().toString(),
+            0
         )
 
         val stringRequest: StringRequest =

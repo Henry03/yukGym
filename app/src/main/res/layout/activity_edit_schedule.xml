@@ -8,7 +8,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
@@ -23,7 +23,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="120dp"
@@ -39,10 +39,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="380dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="504dp">
 
@@ -55,17 +57,19 @@
 
     <Button
         android:id="@+id/btnSave"
-        android:width="380dp"
+        android:width="330dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="560dp"
         android:backgroundTint="#F79523"
         android:text="Save" />
 
     <Button
         android:id="@+id/btnUpdate"
-        android:width="380dp"
+        android:width="330dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

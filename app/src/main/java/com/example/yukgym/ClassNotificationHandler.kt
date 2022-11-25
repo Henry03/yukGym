@@ -7,8 +7,8 @@ import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.yukgym.entity.GymClass
+import com.example.yukgym.fragment.FragmentClassDetail
 
 class ClassNotificationHandler(private var context: FragmentClassDetail): AppCompatActivity() {
     lateinit var notificationManager: NotificationManagerCompat

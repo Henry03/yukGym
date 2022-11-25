@@ -1,4 +1,4 @@
-package com.example.yukgym
+package com.example.yukgym.fragment
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,19 +12,27 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil.setContentView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.yukgym.databinding.ActivityHistoryBinding
+import com.example.yukgym.ActivityHistory
+import com.example.yukgym.ActivityHome
+import com.example.yukgym.R
 import com.example.yukgym.hardware.CustomInfoWindow
 import com.example.yukgym.hardware.ModelMain
+import com.example.yukgym.volley.api.HistoryApi
 import com.example.yukgym.volley.api.ProfileApi
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.yukgym.volley.models.History
+import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
+import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
+import com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
+import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAMarker
+import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAMarkerHover
+import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAMarkerStates
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,17 +44,20 @@ import org.osmdroid.views.MapController
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.OverlayItem
 import java.io.IOException
-import java.nio.channels.AsynchronousFileChannel.open
 import java.nio.charset.StandardCharsets
+import java.sql.Date
 
 
 class FragmentHome : Fragment() {
+
     lateinit var assetManager:AssetManager
     var modelMainList: MutableList<ModelMain> = ArrayList()
     lateinit var mapController: MapController
     lateinit var overlayItem: ArrayList<OverlayItem>
 
     private var queue: RequestQueue? = null
+
+    private var aaChartModel: AAChartModel? = null
 
     var sharedPreferences: SharedPreferences? = null
 
@@ -55,8 +66,6 @@ class FragmentHome : Fragment() {
         try {
             val stream = context?.getAssets()?.open("sample_maps.json")
 
-            println("test1")
-            print("test2")
             val size = stream!!.available()
             val buffer = ByteArray(size)
             stream.read(buffer)
@@ -171,6 +180,9 @@ class FragmentHome : Fragment() {
         val weightTxt :TextView =  view.findViewById(R.id.tv_weight)
 
         getHistoryById(id!!.toLong(), token!!, dateTxt, weightTxt)
+        sevenDayHistory(id!!.toLong(), token!!)
+
+
 
         history.setOnClickListener(){
             (activity as ActivityHome).setActivity(ActivityHistory())
@@ -199,6 +211,88 @@ class FragmentHome : Fragment() {
                 headers["Authorization"] = "Bearer $token"
                 return headers
             }
+        }
+        queue!!.add(stringRequest)
+    }
+
+    fun splineChart(weight: MutableList<Double>): AAChartModel {
+
+        return AAChartModel()
+            .chartType(AAChartType.Spline)
+            .title("Disable Spline Chart Marker Hover Effect")
+            .categories(arrayOf(
+                "一月", "二月", "三月", "四月", "五月", "六月",
+                "七月", "八月", "九月", "十月", "十一月", "十二月"))
+            .markerRadius(0) //marker点半径为0个像素
+            .yAxisLineWidth(0)
+            .yAxisGridLineWidth(0)
+            .legendEnabled(false)
+            .series(arrayOf(
+                AASeriesElement()
+                    .name("Weight")
+                    .lineWidth(5.0)
+                    .color("rgba(220,20,60,1)") //猩红色, alpha 透明度 1
+                    .marker(
+                        AAMarker()
+                        .states(
+                            AAMarkerStates()
+                            .hover(
+                                AAMarkerHover()
+                                .enabled(false))))
+                    .data(weight.toTypedArray())
+            ))
+    }
+
+    private fun sevenDayHistory(id: Long, token: String){
+        println(id)
+        val stringRequest : StringRequest = object:
+            StringRequest(Method.GET, HistoryApi.GET_ALL_URL + id, Response.Listener { response ->
+                val gson = Gson()
+                val jsonObject = JSONObject(response)
+                var history : Array<History> = gson.fromJson(jsonObject.getJSONArray("data").toString(), Array<History>::class.java)
+                var weight = MutableList<Double>(10){0.0}
+                var date = MutableList<String>(10){""}
+                for(hist in history){
+                    weight.add(hist.berat_badan.toDouble())
+                    date.add(hist.tanggal.toString())
+                }
+                aaChartModel = AAChartModel()
+                    .chartType(AAChartType.Spline)
+                    .title("Weight")
+                    .categories(date.toTypedArray())
+                    .markerRadius(0) //marker点半径为0个像素
+                    .yAxisLineWidth(0)
+                    .yAxisGridLineWidth(0)
+                    .legendEnabled(false)
+                    .yAxisTitle("Kg")
+                    .series(arrayOf(
+                        AASeriesElement()
+                            .name("Weight")
+                            .lineWidth(5.0)
+                            .color("rgba(220,20,60,1)") //猩红色, alpha 透明度 1
+                            .marker(
+                                AAMarker()
+                                    .states(
+                                        AAMarkerStates()
+                                            .hover(
+                                                AAMarkerHover()
+                                                    .enabled(false))))
+                            .data(weight.toTypedArray())
+                    ))
+
+                val aaChartView: AAChartView = requireView().findViewById(R.id.AAChartView)
+                aaChartView.aa_drawChartWithChartModel(aaChartModel!!)
+            }, Response.ErrorListener { error ->
+
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+
         }
         queue!!.add(stringRequest)
     }

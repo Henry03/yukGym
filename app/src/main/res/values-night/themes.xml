@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.YukGym" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#F79523</item>
+        <item name="colorPrimaryVariant">#F79523</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

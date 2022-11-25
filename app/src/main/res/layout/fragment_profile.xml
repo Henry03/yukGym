@@ -26,7 +26,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#eeeeee"
+        android:backgroundTint="#ddd"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -72,6 +72,82 @@
             android:backgroundTint="#F79523"
             android:text="Edit Profile" />
 
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/aboutApp"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#ddd"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About App"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="60dp"/>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_baseline_info" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvFingerprintStatus"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="290dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#ddd"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fingerprint enable"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="60dp"/>
+
+        <ImageView
+            android:id="@+id/fingerprintIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_baseline_fingerprint_24_black" />
+
+        <Switch
+            android:id="@+id/fingerprintSwitch"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="250dp" />
     </androidx.cardview.widget.CardView>
 
     <Button

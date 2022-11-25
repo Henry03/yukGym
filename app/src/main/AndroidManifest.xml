@@ -18,8 +18,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityHistory"
+            android:name=".ActivityQrReader"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ActivityHistory"
+            android:exported="false"
+            android:theme="@style/Theme.YukGym.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -54,7 +62,6 @@
         <activity
             android:name=".MainMenu"
             android:exported="false" />
-
         <activity
             android:name=".ActivityRegister"
             android:exported="false"
@@ -63,6 +70,7 @@
             android:name=".ActivityAddEditHistory"
             android:exported="false"
             android:theme="@style/Theme.YukGym.NoActionBar" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -79,6 +87,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".hardware.ActivityQrReader"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.YukGym.NoActionBar" />
     </application>
 
 </manifest>
