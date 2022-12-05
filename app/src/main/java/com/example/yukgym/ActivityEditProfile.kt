@@ -97,32 +97,33 @@ class ActivityEditProfile : AppCompatActivity() {
             var checkSave = true
 
             if (Name.isEmpty()) {
-                itemBinding?.ilName?.setError("Name must be filled with text")
+//                itemBinding?.ilName?.setError("Name must be filled with text")
                 checkSave = false
             }
 
             if (NoTelp.isEmpty()) {
-                itemBinding?.ilPhoneNumber?.setError("Phone Number must be filled with text")
+//                itemBinding?.ilPhoneNumber?.setError("Phone Number must be filled with text")
                 checkSave = false
             }
 
             if (Email.isEmpty()) {
-                itemBinding?.ilEmail?.setError("E-mail must be filled with text")
+//                itemBinding?.ilEmail?.setError("E-mail must be filled with text")
                 checkSave = false
             }
 
             if (!Email.matches(Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"))) {
-                itemBinding?.ilEmail?.setError("Email tidak valid")
+//                itemBinding?.ilEmail?.setError("Email tidak valid")
                 checkSave = false
             }
 
             if (BirthDate.isEmpty()) {
-                itemBinding?.etEmail?.setError("Birth Date must be filled with text")
+//                itemBinding?.etEmail?.setError("Birth Date must be filled with text")
                 checkSave = false
             }
 
+            updateProfile(id!!.toLong(), token!!.toString())
             if (checkSave == true) {
-                updateProfile(id!!.toLong(), token!!.toString())
+
                 Toast.makeText(
                     applicationContext,
                     "Your Profile Changed",
@@ -207,7 +208,9 @@ class ActivityEditProfile : AppCompatActivity() {
             Email?.text.toString(),
             BirthDate?.text.toString(),
             "1",
-            0
+            "1",
+            0,
+            "null"
         )
         val stringRequest: StringRequest =
             object: StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id, Response.Listener { response ->
@@ -224,6 +227,27 @@ class ActivityEditProfile : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
+                    val message = errors.getString("message")
+                    println("profile" + errors.getString("errors"))
+
+                    val Name = itemBinding?.ilName
+                    val NoTelp = itemBinding?.ilPhoneNumber
+                    val Email = itemBinding?.ilEmail
+                    val BirthDate = itemBinding?.etBirthDate
+
+                    if(errors.getString("errors").contains("username")){
+                        Name?.setError(errors.getJSONObject("errors").getJSONArray("username").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("email")){
+                        Email?.setError(errors.getJSONObject("errors").getJSONArray("email").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("notelp")){
+                        NoTelp?.setError(errors.getJSONObject("errors").getJSONArray("notelp").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("birthdate")){
+                        BirthDate?.setError(errors.getJSONObject("errors").getJSONArray("birthdate").get(0).toString())
+                    }
+
                     Toast.makeText(
                         this,
                         errors.getString("message"),

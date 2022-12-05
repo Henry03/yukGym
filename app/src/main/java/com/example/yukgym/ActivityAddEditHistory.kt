@@ -56,8 +56,8 @@ class ActivityAddEditHistory : AppCompatActivity() {
         setContentView(itemBinding?.root)
 
         sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
-        val idUser = sharedPreferences?.getString("id", "")
-        val token = sharedPreferences?.getString("token", "")
+        val idUser = sharedPreferences?.getString("id", "1")
+        val token = sharedPreferences?.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzlkMGU5MDU0NTYyYmRhYjhjOTIyZDVkOWEwYWYxODMyMjVkZmZmZjNlOWUzNGRmY2Y0MzQzOGMxMjNiYzYzMTgxMDk5MTlmNjMxMmFlZTMiLCJpYXQiOjE2NjkyNjgyMzUuMDM2MjE1LCJuYmYiOjE2NjkyNjgyMzUuMDM2MjIxLCJleHAiOjE3MDA4MDQyMzUuMDI0Nzg0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.PPGgILqfx88hUIAGmLP0xKTO78umt0-99jOvV7qlIy0ayxnpngqspuuMcKhMbWZPls1o6SGvqaacLc8NgoFt9nlewIpd0VwlTkFTxja5v5fLoatJBnMrNR1dTUxQvK7DXpBHIt_9zEHUfX2Muj9H25OWKRV1iNgRFQFWeGDJVUv0lFn0HubHrsGBLHyMjPbDWWn6PiZ2V7qrxw-lgvU_Ml2BzpaKoVabhXOqKJClmQmUMb57C1DBl4uZ05-n675ShDkBY7zidxmOgEJQJDAGCAxO_B5G8SC6ziFAByjyUbET_x6AhZunvxOU3hSlkTLNmJqM9OAf2esMjg855SVxefFryMDZBwl3IkGV2oj1vOboARWeLYgwvs2SpOIt2yEipxdXlxYyttNnFPXTUEFm2KKvnZwHbSMmkkBUXg9pAosuCUyVOkoYkvvF8HWsz3u-ZtgbwhhRw35FNclu4ILfrtl-letZ4lDgZP8e7fmd3cJ0hxzma2H0tVXylIXjYiEuQEjFEQI42NV3tf0eKu8EX1yguaHY1AZfnfS432BVMvszrLIkpl5mVVkINxjNCYFlFxYnnXgJjl4iraUd4rpfzUlduVz_YiTzTyxjAwFJOSc2-QS_nc05eh99RE0ca_D1ILCf_ABimONtVg2AGu-futQHGiZXN0mRKm1KOGZQMhY")
 
         queue = Volley.newRequestQueue(this)
         edAktivitas = itemBinding?.etAktivitas
@@ -90,6 +90,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
         val btnSave = itemBinding?.btnSave
         val tvTitle = itemBinding?.tvTitle
         val id = intent.getLongExtra("id", -1)
+        println("idUser : " + idUser)
         if(id== -1L){
             tvTitle!!.setText("Tambah History")
             btnSave!!.setOnClickListener { createHistory(idUser!!.toLong(), token!!) }
@@ -170,9 +171,9 @@ class ActivityAddEditHistory : AppCompatActivity() {
 
         val history = History(
             id,
-            etBeratBadan!!.text.toString().toFloat(),
+            etBeratBadan!!.text.toString().toFloatOrNull(),
             edAktivitas!!.text.toString(),
-            etLamaLatihan!!.text.toString().toInt(),
+            etLamaLatihan!!.text.toString().toIntOrNull(),
             etTanggal!!.text.toString(),
             "null"
         )
@@ -181,9 +182,10 @@ class ActivityAddEditHistory : AppCompatActivity() {
                 val gson = Gson()
                 var history = gson.fromJson(response, History::class.java)
 
-                if(history != null)
-                    Toast.makeText(this@ActivityAddEditHistory, "History Added", Toast.LENGTH_SHORT).show()
-
+                if(history != null) {
+                    Toast.makeText(this@ActivityAddEditHistory, "History Added", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -195,6 +197,24 @@ class ActivityAddEditHistory : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
+                    val BeratBadan = itemBinding?.layoutBeratBadan
+                    val Aktivitas = itemBinding?.layoutAktivitas
+                    val LamaLatihan = itemBinding?.layoutLamaLatihan
+                    val Tanggal = itemBinding?.layoutTanggal
+
+                    if(errors.getString("errors").contains("berat_badan")){
+                        BeratBadan?.setError(errors.getJSONObject("errors").getJSONArray("berat_badan").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("aktivitas")){
+                        Aktivitas?.setError(errors.getJSONObject("errors").getJSONArray("aktivitas").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("lama_latihan")){
+                        LamaLatihan?.setError(errors.getJSONObject("errors").getJSONArray("lama_latihan").get(0).toString())
+                    }
+                    if(errors.getString("errors").contains("tanggal")){
+                        Tanggal?.setError(errors.getJSONObject("errors").getJSONArray("tanggal").get(0).toString())
+                    }
+
                     Toast.makeText(
                         this,
                         errors.getString("message"),
@@ -233,6 +253,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
 
     private fun updateHistory(id: Long, token: String){
         setLoading(true)
+        println("test" + itemBinding?.etBeratBadan?.text.toString().toFloatOrNull())
         val history = History(
             id,
             etBeratBadan!!.text.toString().toFloat(),

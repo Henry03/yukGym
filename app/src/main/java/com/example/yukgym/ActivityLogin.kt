@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -76,8 +77,8 @@ class ActivityLogin : AppCompatActivity(), FingerListener {
         setupHyperlink()
 
 
-        inputUsername = findViewById(R.id.ilUsername)
-        inputPassword = findViewById(R.id.ilPassword)
+        inputUsername = findViewById(R.id.ilUsernameLogin)
+        inputPassword = findViewById(R.id.ilPasswordLogin)
         mainLayout = findViewById(R.id.mainLayout)
 
         val btnClear: Button
@@ -101,16 +102,16 @@ class ActivityLogin : AppCompatActivity(), FingerListener {
             val username: String = inputUsername.editText?.getText().toString()
             val password: String = inputPassword.editText?.getText().toString()
 
-            if(username.isEmpty()){
-                inputUsername.setError("Username must be filled with text")
-            }
+//            if(username.isEmpty()){
+//                inputUsername.setError("Username must be filled with text")
+//            }
+//
+//            if(password.isEmpty()){
+//                inputPassword.setError("Password must be filled with text")
+//            }
 
-            if(password.isEmpty()){
-                inputPassword.setError("Password must be filled with text")
-            }
-
-            inputUsername = findViewById(R.id.ilUsername)
-            inputPassword = findViewById(R.id.ilPassword)
+            inputUsername = findViewById(R.id.ilUsernameLogin)
+            inputPassword = findViewById(R.id.ilPasswordLogin)
             val registerDB: Register = db.registerDao().getRegister(inputUsername.editText?.getText().toString(), inputPassword.editText?.getText().toString())
             loginProfile(inputUsername.editText?.text.toString(), inputPassword.editText?.text.toString())
         })
@@ -221,8 +222,29 @@ class ActivityLogin : AppCompatActivity(), FingerListener {
                 finish()
 
             }, Response.ErrorListener { error ->
-                    Toast.makeText(this@ActivityLogin, "Username/Password incorrect", Toast.LENGTH_SHORT)
-                    .show()
+//
+                try{
+                    val Name = findViewById<TextInputLayout>(R.id.ilUsernameLogin)
+                    val Password = findViewById<TextInputLayout>(R.id.ilPasswordLogin)
+
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    val message = errors.getString("message")
+                    println(message)
+
+                    if(Name.editText?.text.toString().isEmpty()){
+                        val usernameError = errors.getJSONObject("errors").getJSONArray("username")[0].toString()
+                        Name.setError(usernameError)
+                    }
+                    if(Name.editText?.text.toString().isEmpty()){
+                        val usernameError = errors.getJSONObject("errors").getJSONArray("password")[0].toString()
+                        Password.setError(usernameError)
+                    }
+
+                    Toast.makeText(this@ActivityLogin, message, Toast.LENGTH_SHORT).show()
+                }catch (e: Exception){
+                    Toast.makeText(this@ActivityLogin, e.message, Toast.LENGTH_SHORT).show()
+                }
             }){
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {

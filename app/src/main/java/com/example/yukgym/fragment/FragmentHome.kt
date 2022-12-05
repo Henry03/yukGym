@@ -253,7 +253,7 @@ class FragmentHome : Fragment() {
                 var weight = MutableList<Double>(10){0.0}
                 var date = MutableList<String>(10){""}
                 for(hist in history){
-                    weight.add(hist.berat_badan.toDouble())
+                    weight.add(hist.berat_badan!!.toDouble())
                     date.add(hist.tanggal.toString())
                 }
                 aaChartModel = AAChartModel()

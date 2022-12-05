@@ -85,13 +85,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:hint="Tanggal" >
+                android:hint="Tanggal">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_tanggal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date" />
+                    android:inputType="time"
+                    android:focusable="false"
+                    android:allowClickWhenDisabled="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 

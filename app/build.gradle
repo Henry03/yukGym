@@ -97,4 +97,18 @@ dependencies {
     // Fingerprint
     implementation "de.adorsys.android:finger:1.0.0-rc1"
     implementation "androidx.biometric:biometric:1.0.0"
+
+    // Unit Testing
+    androidTestImplementation 'androidx.test:runner:1.5.1'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+
+
+    // Optional -- Hamcrest library
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+
+    // Optional -- UI testing with Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    // Optional -- UI testing with UI Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 }

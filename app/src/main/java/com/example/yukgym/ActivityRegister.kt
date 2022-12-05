@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ import kotlin.collections.HashMap
 class ActivityRegister : AppCompatActivity() {
 
     var itemBinding : ActivityRegisterBinding? = null
-    private lateinit var signUpLayout: ConstraintLayout
+    private lateinit var signUpLayout: ScrollView
     private var registerId : Int = 0
 
     private val notificationId = 101
@@ -96,48 +97,49 @@ class ActivityRegister : AppCompatActivity() {
             var checkSignUp = true
 
             if(Name.isEmpty()){
-                itemBinding?.ilName?.setError("Name must be filled with text")
+//                itemBinding?.ilName?.setError("Name must be filled with text")
                 checkSignUp = false
             }
 
             if(NoTelp.isEmpty()){
-                itemBinding?.ilNoTelp?.setError("Phone Number must be filled with text")
+//                itemBinding?.ilNoTelp?.setError("Phone Number must be filled with text")
                 checkSignUp = false
             }
 
             if(Email.isEmpty()){
-                itemBinding?.ilEmail?.setError("E-mail must be filled with text")
+//                itemBinding?.ilEmail?.setError("E-mail must be filled with text")
                 checkSignUp = false
             }
             println(NoTelp)
             println(Email)
             if (!Email.matches(Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"))) {
-                itemBinding?.ilEmail?.setError("Email tidak valid")
+//                itemBinding?.ilEmail?.setError("Email tidak valid")
                 checkSignUp = false
             }
 
             if(BirthDate.isEmpty()){
-                itemBinding?.etEmail?.setError("Birth Date must be filled with text")
+//                itemBinding?.etEmail?.setError("Birth Date must be filled with text")
                 checkSignUp = false
             }
 
             if(Password.isEmpty()){
-                itemBinding?.etPassword?.setError("Password must be filled with text")
+//                itemBinding?.etPassword?.setError("Password must be filled with text")
                 checkSignUp = false
             }
 
             if(PasswordConfirm.isEmpty()){
-                itemBinding?.etPasswordConfirm?.setError("Password Confirmation must be filled with text")
+//                itemBinding?.etPasswordConfirm?.setError("Password Confirmation must be filled with text")
                 checkSignUp = false
             }
 
             if(Password != PasswordConfirm){
-                itemBinding?.etPasswordConfirm?.setError("Password Confirmation doesn't match with password")
+//                itemBinding?.etPasswordConfirm?.setError("Password Confirmation doesn't match with password")
                 checkSignUp = false
             }
 
+            createProfile()
             if(checkSignUp == true){
-                createProfile()
+
                 createNotificationChannel()
                 sendNotification()
                 Toast.makeText(applicationContext, itemBinding?.etName?.getText().toString() + " registered", Toast.LENGTH_SHORT).show()
@@ -153,17 +155,30 @@ class ActivityRegister : AppCompatActivity() {
         })
     }
 
-    private fun createProfile(){
-        val formatter = DateTimeFormatter.ofPattern("d/MM/yyyy", Locale.ENGLISH)
-        val date = LocalDate.parse(itemBinding?.ilBirthDate?.editText?.getText().toString(), formatter)
 
+
+    private fun createProfile(){
+        val Name = itemBinding?.etName
+        val NoTelp = itemBinding?.etNoTelp
+        val Email = itemBinding?.etEmail
+        val BirthDate = itemBinding?.etBirthDate
+        val Password = itemBinding?.etPassword
+        val PasswordConfirm = itemBinding?.etPasswordConfirm
+
+        val formatter = DateTimeFormatter.ofPattern("d/MM/yyyy", Locale.ENGLISH)
+        var date:String = itemBinding?.ilBirthDate?.editText?.getText().toString()
+        if(date != ""){
+            date = LocalDate.parse(itemBinding?.ilBirthDate?.editText?.getText().toString(), formatter).toString()
+        }
         val profile = Profile(
             itemBinding?.ilName?.editText?.getText().toString(),
             itemBinding?.ilNoTelp?.editText?.getText().toString(),
             itemBinding?.ilEmail?.editText?.getText().toString(),
-            date.toString(),
+            date,
             itemBinding?.ilPassword?.editText?.getText().toString(),
-            0
+            itemBinding?.ilPasswordConfirm?.editText?.getText().toString(),
+            0,
+            "null"
         )
 
         val stringRequest: StringRequest =
@@ -179,19 +194,57 @@ class ActivityRegister : AppCompatActivity() {
                 finish()
 
             }, Response.ErrorListener { error ->
-                AlertDialog.Builder(this@ActivityRegister)
-                    .setTitle("Error")
-                    .setMessage(error.message)
-                    .setPositiveButton("OK", null)
-                    .show()
+//                AlertDialog.Builder(this@ActivityRegister)
+//                    .setTitle("Error")
+//                    .setMessage(error.message)
+//                    .setPositiveButton("OK", null)
+//                    .show()
                 try{
+
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                    val message = errors.getString("message")
+                    if(Name?.getText().toString().isEmpty()){
+                        val usernameError = errors.getJSONObject("errors").getJSONArray("username")[0].toString()
+                        itemBinding?.ilName?.setError(usernameError)
+                    }
+                    if(NoTelp?.getText().toString().isEmpty()) {
+                        val phoneError =
+                            errors.getJSONObject("errors").getJSONArray("notelp")[0].toString()
+                        itemBinding?.ilNoTelp?.setError(phoneError)
+                    }
+                    if (BirthDate?.getText().toString().isEmpty()) {
+                        val birthDateError =
+                            errors.getJSONObject("errors").getJSONArray("birthdate")[0].toString()
+                        itemBinding?.ilBirthDate?.setError(birthDateError)
+                    }
+                    if(Email?.getText().toString().isEmpty()) {
+                        val emailError =
+                            errors.getJSONObject("errors").getJSONArray("email")[0].toString()
+                        itemBinding?.ilEmail?.setError(emailError)
+                    }
+                    if (Password?.getText().toString().isEmpty()) {
+                        val passwordError =
+                            errors.getJSONObject("errors").getJSONArray("password")[0].toString()
+                        itemBinding?.ilPassword?.setError(passwordError)
+                    }
+
+                    if (PasswordConfirm?.getText().toString().isEmpty()) {
+                        val passwordConfirmError =
+                            errors.getJSONObject("errors").getJSONArray("passwordConfirmation")[0].toString()
+                        itemBinding?.ilPassword?.setError(passwordConfirmError)
+                    }
+
+                    if(message!="success"){
+                        Toast.makeText(
+                            this,
+                            message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+
                 }catch (e: Exception){
                     Toast.makeText(this@ActivityRegister, e.message, Toast.LENGTH_SHORT).show()
                 }

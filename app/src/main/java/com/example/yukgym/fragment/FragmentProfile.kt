@@ -155,7 +155,9 @@ class FragmentProfile : Fragment() {
             "",
             "",
             "",
-            status.toInt()
+            "",
+            status.toInt(),
+            "null"
         )
         val stringRequest: StringRequest =
             object: StringRequest(Method.PUT, ProfileApi.FINGERPRINT + id, Response.Listener { response ->
