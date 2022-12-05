@@ -154,6 +154,20 @@ class ActivityAddEditHistory : AppCompatActivity() {
 
     private fun createHistory(id: Long, token : String){
         setLoading(true)
+        
+        if(etBeratBadan!!.text.toString().isEmpty()) {
+            Toast.makeText(this@ActivityAddEditHistory, "Berat Badan tidak boleh kosong!", Toast.LENGTH_SHORT)
+                .show()
+        }else if(edAktivitas!!.text.toString().isEmpty()) {
+            Toast.makeText( this@ActivityAddEditHistory, "Aktivitas tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+        }
+        else if(etLamaLatihan!!.text.toString().isEmpty()) {
+            Toast.makeText( this@ActivityAddEditHistory, "Lama Latihan tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+        }
+        else if(etTanggal!!.text.toString().isEmpty()) {
+            Toast.makeText( this@ActivityAddEditHistory, "Tanggal tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+        }else{
+
         val history = History(
             id,
             etBeratBadan!!.text.toString().toFloat(),
@@ -211,6 +225,10 @@ class ActivityAddEditHistory : AppCompatActivity() {
             }
 
         queue!!.add(stringRequest)
+
+        }
+
+        
     }
 
     private fun updateHistory(id: Long, token: String){
