@@ -35,7 +35,7 @@ class ActivityRegisterTest {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(7000)
+        Thread.sleep(3000)
 
         val materialButton2 = onView(
             allOf(
@@ -193,9 +193,37 @@ class ActivityRegisterTest {
         )
         materialButton5.perform(scrollTo(), click())
         onView(isRoot()).perform(waitFor(3000))
-        1
 
-        val materialButton20 = onView(
+        val textInputEditText11 = onView(
+            allOf(
+                withId(R.id.etBirthDate),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.ilBirthDate),
+                        0
+                    ),
+                    0
+                )
+            )
+        )
+        textInputEditText11.perform(scrollTo(), click())
+
+        val materialButton7 = onView(
+            allOf(
+                withId(android.R.id.button1), withText("OK"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.ScrollView")),
+                        0
+                    ),
+                    3
+                )
+            )
+        )
+        materialButton7.perform(scrollTo(), click())
+        onView(isRoot()).perform(waitFor(3000))
+
+        val materialButton8 = onView(
             allOf(
                 withId(R.id.btnSignUp), withText("SignUp"),
                 childAtPosition(
@@ -210,8 +238,27 @@ class ActivityRegisterTest {
                 )
             )
         )
-        materialButton20.perform(scrollTo(), click())
+        materialButton8.perform(scrollTo(), click())
         onView(isRoot()).perform(waitFor(3000))
+//        1
+//
+//        val materialButton20 = onView(
+//            allOf(
+//                withId(R.id.btnSignUp), withText("SignUp"),
+//                childAtPosition(
+//                    allOf(
+//                        withId(R.id.linearLayout2),
+//                        childAtPosition(
+//                            withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+//                            8
+//                        )
+//                    ),
+//                    1
+//                )
+//            )
+//        )
+//        materialButton20.perform(scrollTo(), click())
+//        onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText7 = onView(
             allOf(
@@ -303,36 +350,7 @@ class ActivityRegisterTest {
 //        materialButton21.perform(scrollTo(), click())
 //        onView(isRoot()).perform(waitFor(3000))
 
-        val textInputEditText11 = onView(
-            allOf(
-                withId(R.id.etBirthDate),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.ilBirthDate),
-                        0
-                    ),
-                    0
-                )
-            )
-        )
-        textInputEditText11.perform(scrollTo(), click())
-
-        val materialButton7 = onView(
-            allOf(
-                withId(android.R.id.button1), withText("OK"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
-                        0
-                    ),
-                    3
-                )
-            )
-        )
-        materialButton7.perform(scrollTo(), click())
-        onView(isRoot()).perform(waitFor(3000))
-
-        val materialButton8 = onView(
+        val materialButton24 = onView(
             allOf(
                 withId(R.id.btnSignUp), withText("SignUp"),
                 childAtPosition(
@@ -347,7 +365,7 @@ class ActivityRegisterTest {
                 )
             )
         )
-        materialButton8.perform(scrollTo(), click())
+        materialButton24.perform(scrollTo(), click())
         onView(isRoot()).perform(waitFor(3000))
 
         val textInputEditText12 = onView(
