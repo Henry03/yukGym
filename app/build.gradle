@@ -85,18 +85,18 @@ dependencies {
     // Fancy Toast
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
 
-   : // Material Dialog\n" +
-            "    implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.3'\n" +
-            "\n" +
-            "    // Lottie Animation\n" +
-            "    implementation 'com.airbnb.android:lottie:5.2.0'\n" +
-            "\n" +
-            "    // Chart\n" +
-            "    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'\n" +
-            "\n" +
-            "    // Fingerprint\n" +
-            "    implementation \"de.adorsys.androidfinger:1.0.0-rc1"
-    implementation "androidx.biometric:biometric:1.0.0"
+   // Material Dialog"
+    implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.3'
+
+    // Lottie Animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // Chart
+    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
+
+    // Fingerprint
+    implementation 'de.adorsys.android:finger:1.0.0-rc1'
+    implementation 'androidx.biometric:biometric:1.0.0'
 
     // Unit Testing
     androidTestImplementation 'androidx.test:runner:1.5.1'

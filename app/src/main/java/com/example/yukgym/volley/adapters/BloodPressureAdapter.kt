@@ -54,7 +54,7 @@ class BloodPressureAdapter (private var bloodPressureList: List<BloodPressure>, 
             materialAlertDialogBuilder.setTitle("Konfirmasi")
                 .setMessage("Are you sure to delete this record?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Delete"){, ->
+                .setPositiveButton("Delete"){_,_ ->
                     if (context is ActivityBloodPressure) bloodPressure.id?.let { it1 ->
                         context.deleteBloodPressure(
                             it1,
@@ -117,7 +117,7 @@ class BloodPressureAdapter (private var bloodPressureList: List<BloodPressure>, 
             etDatetime = itemView.findViewById(R.id.tvDateTime)
             btnEdit = itemView.findViewById(R.id.icon_edit_blood_pressure)
             btnDelete = itemView.findViewById(R.id.icon_delete_blood_pressure)
-        }
+        }
 
-    }
+    }
 }

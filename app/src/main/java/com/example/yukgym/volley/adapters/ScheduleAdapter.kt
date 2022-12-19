@@ -126,5 +126,5 @@ class ScheduleAdapter (private var scheduleList: List<Schedule>, private val lis
     interface OnAdapterListener{
         fun deleteSchedule(schedule: Schedule)
         fun editSchedule(schedule: Schedule)
-    }
+    }
 }

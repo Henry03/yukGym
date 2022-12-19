@@ -61,7 +61,7 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
             materialAlertDialogBuilder.setTitle("Konfirmasi")
                 .setMessage("Apakah anda yakin ingin menghapus history ini?")
                 .setNegativeButton("Batal", null)
-                .setPositiveButton("Hapus"){, ->
+                .setPositiveButton("Hapus"){_,_ ->
                     if (context is ActivityHistory) history.id?.let { it1 ->
                         context.deleteHistory(
                             it1,
@@ -129,7 +129,7 @@ class HistoryAdapter (private var historyList: List<History>, context: Context):
             etTanggal = itemView.findViewById(R.id.tv_tanggal)
             btnDelete = itemView.findViewById(R.id.btn_delete)
             cvHistory = itemView.findViewById(R.id.cv_history)
-        }
+  }
 
-    }
+}
 }
