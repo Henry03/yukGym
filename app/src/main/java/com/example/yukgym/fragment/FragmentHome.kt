@@ -3,6 +3,7 @@ package com.example.yukgym.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
@@ -12,16 +13,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.yukgym.ActivityBloodPressure
 import com.example.yukgym.ActivityHistory
 import com.example.yukgym.ActivityHome
 import com.example.yukgym.R
 import com.example.yukgym.hardware.CustomInfoWindow
 import com.example.yukgym.hardware.ModelMain
+import com.example.yukgym.volley.api.BloodPressureApi
 import com.example.yukgym.volley.api.HistoryApi
 import com.example.yukgym.volley.api.ProfileApi
 import com.example.yukgym.volley.models.History
@@ -34,6 +38,7 @@ import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAMarkerHover
 import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAMarkerStates
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import org.osmdroid.config.Configuration
@@ -144,6 +149,7 @@ class FragmentHome : Fragment() {
             mapView.onPause()
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -175,18 +181,46 @@ class FragmentHome : Fragment() {
         val id = sharedPreferences!!.getString("id", "")
         val token = sharedPreferences!!.getString("token", "")
         val history = view.findViewById<CardView>(R.id.historyCard)
+        val bloodPressure = view.findViewById<CardView>(R.id.bloodPressureCard)
 
         val dateTxt :TextView =  view.findViewById(R.id.tv_date)
         val weightTxt :TextView =  view.findViewById(R.id.tv_weight)
 
+        val bloodPressureTxt :TextView =  view.findViewById(R.id.tv_blood_pressure_home)
+        val bloodPressureStatus :TextView =  view.findViewById(R.id.tv_blood_pressure_status)
+        val bloodPressureDate :TextView =  view.findViewById(R.id.tv_blood_pressure_date)
+
         getHistoryById(id!!.toLong(), token!!, dateTxt, weightTxt)
         sevenDayHistory(id!!.toLong(), token!!)
 
-
+        getLastBloodPressure(token, bloodPressureTxt, bloodPressureDate, bloodPressureStatus)
 
         history.setOnClickListener(){
             (activity as ActivityHome).setActivity(ActivityHistory())
         }
+
+        bloodPressure.setOnClickListener(){
+            (activity as ActivityHome).setActivity(ActivityBloodPressure())
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        sharedPreferences = this.getActivity()?.getSharedPreferences("login", Context.MODE_PRIVATE)
+        val id = sharedPreferences!!.getString("id", "")
+        val token = sharedPreferences!!.getString("token", "")
+
+        val dateTxt :TextView =  requireView().findViewById(R.id.tv_date)
+        val weightTxt :TextView =  requireView().findViewById(R.id.tv_weight)
+
+        val bloodPressureTxt :TextView =  requireView().findViewById(R.id.tv_blood_pressure_home)
+        val bloodPressureStatus :TextView =  requireView().findViewById(R.id.tv_blood_pressure_status)
+        val bloodPressureDate :TextView =  requireView().findViewById(R.id.tv_blood_pressure_date)
+
+        getHistoryById(id!!.toLong(), token!!, dateTxt, weightTxt)
+        sevenDayHistory(id!!.toLong(), token!!)
+        getLastBloodPressure(token, bloodPressureTxt, bloodPressureDate, bloodPressureStatus)
     }
 
     private fun getHistoryById(id: Long, token:String, date: TextView, weight : TextView){
@@ -222,7 +256,7 @@ class FragmentHome : Fragment() {
             .title("Disable Spline Chart Marker Hover Effect")
             .categories(arrayOf(
                 "一月", "二月", "三月", "四月", "五月", "六月",
-                "七月", "八月", "九月", "十月", "十一月", "十二月"))
+                "七月", "八月"))
             .markerRadius(0) //marker点半径为0个像素
             .yAxisLineWidth(0)
             .yAxisGridLineWidth(0)
@@ -293,6 +327,49 @@ class FragmentHome : Fragment() {
                 return headers
             }
 
+        }
+        queue!!.add(stringRequest)
+    }
+
+    private fun getLastBloodPressure(token:String, bloodPressure: TextView, datetime: TextView, status: TextView){
+
+        val stringRequest: StringRequest = object :
+            StringRequest(
+                Method.GET, BloodPressureApi.GET_LAST_DATA,
+                { response ->
+                    val jsonObject = JSONObject(response)
+                    val sistolic = jsonObject.getJSONObject("data").getString("systolic")
+                    val diastolic = jsonObject.getJSONObject("data").getString("diastolic")
+                    val date = jsonObject.getJSONObject("data").getString("date_time")
+                    if(sistolic.toInt() < 120 && diastolic.toInt() < 80){
+                        status.setText("Normal")
+                        bloodPressure.setTextColor(Color.parseColor("#00DD00"))
+                    }else if(sistolic.toInt() in 120..129 && diastolic.toInt() < 80){
+                        status.setText("Elevated")
+                        bloodPressure.setTextColor(Color.parseColor("#DDDD00"))
+                    }else if(sistolic.toInt() in 130..139 || diastolic.toInt() in 80..89){
+                        status.setText("High Blood Pressure (Hypertension) Stage 1")
+                        bloodPressure.setTextColor(Color.parseColor("#FFA500"))
+                    }else if(sistolic.toInt() in 140..180 || diastolic.toInt() in 90..120){
+                        status.setText("High Blood Pressure (Hypertension) Stage 2")
+                        bloodPressure.setTextColor(Color.parseColor("#FF0000"))
+                    }else if(sistolic.toInt() > 180 || diastolic.toInt() > 120){
+                        status.setText("Hypertensive Crisis")
+                        bloodPressure.setTextColor(Color.parseColor("#AA0000"))
+                    }
+                    datetime.setText(date)
+                    bloodPressure.setText(""+ sistolic + "/" + diastolic + " mmHg")
+                },
+                Response.ErrorListener{ error ->
+
+                }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
         }
         queue!!.add(stringRequest)
     }

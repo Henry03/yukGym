@@ -9,10 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.yukgym.fragment.FragmentClass
-import com.example.yukgym.fragment.FragmentHome
-import com.example.yukgym.fragment.FragmentProfile
-import com.example.yukgym.fragment.FragmentSchedule
+import com.example.yukgym.fragment.*
 import com.example.yukgym.hardware.ActivityQrReader
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -27,7 +24,7 @@ class ActivityHome : AppCompatActivity() {
         val fragmentHome = FragmentHome()
         val fragmentClass = FragmentClass()
         val fragmentProfile = FragmentProfile()
-        val fragmentSchedule = FragmentSchedule()
+        val fragmentSchedule = FragmentScheduleVolley()
 
         setCurrentFragment(fragmentHome)
 

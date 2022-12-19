@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FragmentSchedule">
+    tools:context=".fragment.FragmentScheduleVolley"
+    android:id="@+id/fragmentScheduleId">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -18,11 +19,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation_bar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_schedule"
+    <SearchView
+        android:id="@+id/sv_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Cari"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_schedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/activity_schedule_adapter"/>
+        android:layout_marginTop="60dp"
+        android:paddingBottom="200px">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150px"
+            android:paddingBottom="200px"
+            tools:listitem="@layout/activity_schedule_adapter"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/btnCreate"
@@ -34,5 +57,8 @@
         android:text="Add Schedule"
         android:backgroundTint="#F79523"/>
 
-
+    <include
+        android:id="@+id/layout_loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 </FrameLayout>

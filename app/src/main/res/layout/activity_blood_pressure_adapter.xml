@@ -5,18 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
-    android:paddingBottom="20px"
-    android:paddingTop="20px"
-    tools:context=".ScheduleAdapter">
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="10dp">
+
     <!--    #F79523-->
     <!--    #565658-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         android:backgroundTint="#eeeeee"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,34 +22,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvBloodPressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Title"
+            android:layout_marginTop="15dp"
+            android:text="Blood Pressure"
             android:textColor="#F79523"
             android:textSize="24dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvActivity"
+            android:id="@+id/tvDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:text="Activity" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="80dp"
-            android:text="13.00" />
+            android:layout_marginTop="55dp"
+            android:text="Date and time" />
 
         <ImageView
-            android:id="@+id/icon_edit"
+            android:id="@+id/icon_edit_blood_pressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -61,7 +51,7 @@
             android:src="@drawable/ic_edit" />
 
         <ImageView
-            android:id="@+id/icon_delete"
+            android:id="@+id/icon_delete_blood_pressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"

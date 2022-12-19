@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.FragmentHome">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -42,7 +47,58 @@
         android:layout_gravity="center_horizontal"
         android:text="Let's Find Our Another Gyms" />
 
-    />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bloodPressureCard"
+        android:layout_width="320dp"
+        android:layout_height="140dp"
+        app:cardCornerRadius="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="320dp" >
+
+        <TextView
+            android:id="@+id/tv_blood_pressure_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginStart="20dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#F79523"
+            android:text="90/90 mmHg" />
+
+        <TextView
+        android:id="@+id/tv_blood_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Blood Pressure" />
+
+        <TextView
+            android:id="@+id/tv_blood_pressure_date1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="20dp"
+            android:text="Last Record : " />
+
+        <TextView
+            android:id="@+id/tv_blood_pressure_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="105dp"
+            android:text="2020-20-10 " />
+
+        <TextView
+            android:id="@+id/tv_blood_pressure_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginStart="20dp"
+            android:text="Normal" />
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/historyCard"
@@ -50,7 +106,8 @@
         android:layout_height="300dp"
         app:cardCornerRadius="20dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="330dp" >
+        android:layout_marginTop="480dp"
+        android:layout_marginBottom="50dp">
 
         <TextView
             android:id="@+id/textView5"
@@ -85,4 +142,5 @@
             android:layout_height="200dp" />
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+    </FrameLayout>
+    </ScrollView>

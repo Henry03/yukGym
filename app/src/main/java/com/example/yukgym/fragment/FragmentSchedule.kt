@@ -54,10 +54,10 @@ class FragmentSchedule : Fragment() {
                 deleteDialog(schedule)
             }
         })
-        list_schedule.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = scheduleAdapter
-        }
+//        list_schedule.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = scheduleAdapter
+//        }
     }
 
     private fun deleteDialog(schedule : Schedule){

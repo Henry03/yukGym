@@ -40,7 +40,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ActivityEditSchedule"
+        android:name=".ActivityEditSchedule"
+        android:exported="true">
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+    </activity>
+        <activity
+            android:name=".ActivityAddEditSchedule"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -68,6 +75,14 @@
             android:theme="@style/Theme.YukGym.NoActionBar" />
         <activity
             android:name=".ActivityAddEditHistory"
+            android:exported="true"
+            android:theme="@style/Theme.YukGym.NoActionBar" />
+        <activity
+            android:name=".ActivityBloodPressure"
+            android:exported="true"
+            android:theme="@style/Theme.YukGym.NoActionBar" />
+        <activity
+            android:name=".ActivityAddEditBloodPressure"
             android:exported="true"
             android:theme="@style/Theme.YukGym.NoActionBar" />
 

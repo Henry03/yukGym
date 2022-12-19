@@ -111,4 +111,7 @@ dependencies {
 
     // Optional -- UI testing with UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    // Gauge meter
+    implementation 'com.github.anastr:speedviewlib:1.6.0'
 }

@@ -1,6 +1,7 @@
 package com.example.yukgym
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,16 +15,21 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.yukgym.databinding.ActivityAddEditBloodPressureBinding
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import com.example.yukgym.databinding.ActivityAddEditHistoryBinding
+import com.example.yukgym.volley.api.BloodPressureApi
 import com.example.yukgym.volley.api.HistoryApi
+import com.example.yukgym.volley.models.BloodPressure
 import com.example.yukgym.volley.models.History
+import kotlinx.android.synthetic.main.activity_add_edit_blood_pressure.*
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashMap
 
-class ActivityAddEditHistory : AppCompatActivity() {
+class ActivityAddEditBloodPressure : AppCompatActivity() {
     companion object{
         private  val ACTIVITY_LIST = arrayOf(
             "Advanced Flow Yoga",
@@ -39,20 +45,19 @@ class ActivityAddEditHistory : AppCompatActivity() {
         )
     }
 
-    private var etBeratBadan: EditText? = null
-    private var etLamaLatihan: EditText? = null
-    private var etTanggal: EditText? = null
-    private var edAktivitas: AutoCompleteTextView? = null
+    private var etSystolic: EditText? = null
+    private var etDiastolic: EditText? = null
+    private var etDatetime: EditText? = null
     private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
 
-    var itemBinding: ActivityAddEditHistoryBinding? = null
+    var itemBinding: ActivityAddEditBloodPressureBinding? = null
     var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        itemBinding = ActivityAddEditHistoryBinding.inflate(layoutInflater)
+        itemBinding = ActivityAddEditBloodPressureBinding.inflate(layoutInflater)
         setContentView(itemBinding?.root)
 
         sharedPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE)
@@ -60,29 +65,23 @@ class ActivityAddEditHistory : AppCompatActivity() {
         val token = sharedPreferences?.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzlkMGU5MDU0NTYyYmRhYjhjOTIyZDVkOWEwYWYxODMyMjVkZmZmZjNlOWUzNGRmY2Y0MzQzOGMxMjNiYzYzMTgxMDk5MTlmNjMxMmFlZTMiLCJpYXQiOjE2NjkyNjgyMzUuMDM2MjE1LCJuYmYiOjE2NjkyNjgyMzUuMDM2MjIxLCJleHAiOjE3MDA4MDQyMzUuMDI0Nzg0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.PPGgILqfx88hUIAGmLP0xKTO78umt0-99jOvV7qlIy0ayxnpngqspuuMcKhMbWZPls1o6SGvqaacLc8NgoFt9nlewIpd0VwlTkFTxja5v5fLoatJBnMrNR1dTUxQvK7DXpBHIt_9zEHUfX2Muj9H25OWKRV1iNgRFQFWeGDJVUv0lFn0HubHrsGBLHyMjPbDWWn6PiZ2V7qrxw-lgvU_Ml2BzpaKoVabhXOqKJClmQmUMb57C1DBl4uZ05-n675ShDkBY7zidxmOgEJQJDAGCAxO_B5G8SC6ziFAByjyUbET_x6AhZunvxOU3hSlkTLNmJqM9OAf2esMjg855SVxefFryMDZBwl3IkGV2oj1vOboARWeLYgwvs2SpOIt2yEipxdXlxYyttNnFPXTUEFm2KKvnZwHbSMmkkBUXg9pAosuCUyVOkoYkvvF8HWsz3u-ZtgbwhhRw35FNclu4ILfrtl-letZ4lDgZP8e7fmd3cJ0hxzma2H0tVXylIXjYiEuQEjFEQI42NV3tf0eKu8EX1yguaHY1AZfnfS432BVMvszrLIkpl5mVVkINxjNCYFlFxYnnXgJjl4iraUd4rpfzUlduVz_YiTzTyxjAwFJOSc2-QS_nc05eh99RE0ca_D1ILCf_ABimONtVg2AGu-futQHGiZXN0mRKm1KOGZQMhY")
 
         queue = Volley.newRequestQueue(this)
-        edAktivitas = itemBinding?.etAktivitas
-        etBeratBadan = itemBinding?.etBeratBadan
-        etLamaLatihan = itemBinding?.etLamaLatihan
-        etTanggal = itemBinding?.etTanggal
+        etDatetime = itemBinding?.etDatetime
+        etSystolic = itemBinding?.etSystolic
+        etDiastolic = itemBinding?.etDiastolic
         layoutLoading = findViewById(R.id.layout_loading)
 
-        setExposedDropdownMenu()
 
-        itemBinding?.etTanggal?.setOnClickListener{
+//        itemBinding?.etDatetime?.setOnClickListener{
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
+            val hour = c.get(Calendar.HOUR_OF_DAY)
+            val minute = c.get(Calendar.MINUTE)
+            val second = c.get(Calendar.SECOND)
+            var time:String = ""
 
-            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
-                // Display Selected date in textbox
-                itemBinding?.etTanggal?.setText("" + year + "-" + monthOfYear + "-" + dayOfMonth)
-
-            }, year, month, day)
-
-            dpd.show()
-        }
+        itemBinding?.etDatetime?.setText("" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second)
 
         val btnCancel = itemBinding?.btnCancel
         btnCancel!!.setOnClickListener { finish() }
@@ -92,38 +91,29 @@ class ActivityAddEditHistory : AppCompatActivity() {
         val id = intent.getLongExtra("id", -1)
         println("idUser : " + idUser)
         if(id== -1L){
-            tvTitle!!.setText("Tambah History")
+            tvTitle!!.setText("Add Blood Pressure Record")
             btnSave!!.setOnClickListener { createHistory(idUser!!.toLong(), token!!) }
         }else{
             println("id" +id)
-            tvTitle!!.setText("Edit History")
+            tvTitle!!.setText("Edit Blood Pressure Record")
             getHistoryById(id, token!!)
 
-            btnSave!!.setOnClickListener { updateHistory(id, token!!) }
+            btnSave!!.setOnClickListener { updateBloodPressure(id, token!!) }
         }
-    }
-
-    fun setExposedDropdownMenu(){
-        val adapterHistory: ArrayAdapter<String> = ArrayAdapter<String>(
-            this,
-            R.layout.item_list_history, ACTIVITY_LIST)
-        edAktivitas!!.setAdapter(adapterHistory)
     }
 
     private fun getHistoryById(id: Long, token : String){
         setLoading(true)
 
         val stringRequest: StringRequest = object :
-            StringRequest(Method.GET, HistoryApi.GET_BY_ID_URL + id,
+            StringRequest(Method.GET, BloodPressureApi.GET_BY_ID_URL + id,
                 { response ->
                     val jsonObject = JSONObject(response)
-                    val history = Gson().fromJson(jsonObject.getString("data"), History::class.java)
-                    println("beratbadan" + history.berat_badan)
-                    etBeratBadan!!.setText(history.berat_badan.toString())
-                    etLamaLatihan!!.setText(history.lama_latihan.toString())
-                    etTanggal!!.setText(history.tanggal)
-                    edAktivitas!!.setText(history.aktivitas)
-                    setExposedDropdownMenu()
+                    val bloodPressure = Gson().fromJson(jsonObject.getString("data"), BloodPressure::class.java)
+                    etSystolic!!.setText(bloodPressure.systolic.toString())
+                    etDiastolic!!.setText(bloodPressure.diastolic.toString())
+                    etDatetime!!.setText(bloodPressure.date_time)
+
                     setLoading(false)
                 },
                 Response.ErrorListener{ error ->
@@ -137,7 +127,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } catch (e: Exception){
-                        Toast.makeText(this@ActivityAddEditHistory, e.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ActivityAddEditBloodPressure, e.message, Toast.LENGTH_SHORT).show()
 
                     }
                 }) {
@@ -156,34 +146,29 @@ class ActivityAddEditHistory : AppCompatActivity() {
     private fun createHistory(id: Long, token : String){
         setLoading(true)
         
-//        if(etBeratBadan!!.text.toString().isEmpty()) {
-//            Toast.makeText(this@ActivityAddEditHistory, "Berat Badan tidak boleh kosong!", Toast.LENGTH_SHORT)
+//        if(etDatetime!!.text.toString().isEmpty()) {
+//            Toast.makeText(this@ActivityAddEditBloodPressure, "Berat Badan tidak boleh kosong!", Toast.LENGTH_SHORT)
 //                .show()
-//        }else if(edAktivitas!!.text.toString().isEmpty()) {
-//            Toast.makeText( this@ActivityAddEditHistory, "Aktivitas tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+//        }else if(etDiastolic!!.text.toString().isEmpty()) {
+//            Toast.makeText( this@ActivityAddEditBloodPressure, "Aktivitas tidak boleh kosong!", Toast.LENGTH_SHORT).show()
 //        }
-//        else if(etLamaLatihan!!.text.toString().isEmpty()) {
-//            Toast.makeText( this@ActivityAddEditHistory, "Lama Latihan tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+//        else if(etSystolic!!.text.toString().isEmpty()) {
+//            Toast.makeText( this@ActivityAddEditBloodPressure, "Lama Latihan tidak boleh kosong!", Toast.LENGTH_SHORT).show()
 //        }
-//        else if(etTanggal!!.text.toString().isEmpty()) {
-//            Toast.makeText( this@ActivityAddEditHistory, "Tanggal tidak boleh kosong!", Toast.LENGTH_SHORT).show()
-//        }else{
+//        else{
 
-        val history = History(
-            id,
-            etBeratBadan!!.text.toString().toFloatOrNull(),
-            edAktivitas!!.text.toString(),
-            etLamaLatihan!!.text.toString().toIntOrNull(),
-            etTanggal!!.text.toString(),
-            "null"
+        val bloodPressure = BloodPressure(
+            etDatetime!!.text.toString(),
+            etSystolic!!.text.toString().toIntOrNull(),
+            etDiastolic!!.text.toString().toIntOrNull(),
         )
         val stringRequest: StringRequest =
-            object: StringRequest(Method.POST, HistoryApi.ADD_URL, Response.Listener { response ->
+            object: StringRequest(Method.POST, BloodPressureApi.ADD_URL, Response.Listener { response ->
                 val gson = Gson()
-                var history = gson.fromJson(response, History::class.java)
+                var bloodPressure = gson.fromJson(response, BloodPressure::class.java)
 
-                if(history != null) {
-                    Toast.makeText(this@ActivityAddEditHistory, "History Added", Toast.LENGTH_SHORT)
+                if(bloodPressure != null) {
+                    Toast.makeText(this@ActivityAddEditBloodPressure, "History Added", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -197,23 +182,23 @@ class ActivityAddEditHistory : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    val BeratBadan = itemBinding?.layoutBeratBadan
-                    val Aktivitas = itemBinding?.layoutAktivitas
-                    val LamaLatihan = itemBinding?.layoutLamaLatihan
-                    val Tanggal = itemBinding?.layoutTanggal
-
-                    if(errors.getString("errors").contains("berat_badan")){
-                        BeratBadan?.setError(errors.getJSONObject("errors").getJSONArray("berat_badan").get(0).toString())
-                    }
-                    if(errors.getString("errors").contains("aktivitas")){
-                        Aktivitas?.setError(errors.getJSONObject("errors").getJSONArray("aktivitas").get(0).toString())
-                    }
-                    if(errors.getString("errors").contains("lama_latihan")){
-                        LamaLatihan?.setError(errors.getJSONObject("errors").getJSONArray("lama_latihan").get(0).toString())
-                    }
-                    if(errors.getString("errors").contains("tanggal")){
-                        Tanggal?.setError(errors.getJSONObject("errors").getJSONArray("tanggal").get(0).toString())
-                    }
+//                    val BeratBadan = itemBinding?.layoutBeratBadan
+//                    val Aktivitas = itemBinding?.layoutAktivitas
+//                    val LamaLatihan = itemBinding?.layoutLamaLatihan
+//                    val Tanggal = itemBinding?.layoutTanggal
+//
+//                    if(errors.getString("errors").contains("berat_badan")){
+//                        BeratBadan?.setError(errors.getJSONObject("errors").getJSONArray("berat_badan").get(0).toString())
+//                    }
+//                    if(errors.getString("errors").contains("aktivitas")){
+//                        Aktivitas?.setError(errors.getJSONObject("errors").getJSONArray("aktivitas").get(0).toString())
+//                    }
+//                    if(errors.getString("errors").contains("lama_latihan")){
+//                        LamaLatihan?.setError(errors.getJSONObject("errors").getJSONArray("lama_latihan").get(0).toString())
+//                    }
+//                    if(errors.getString("errors").contains("tanggal")){
+//                        Tanggal?.setError(errors.getJSONObject("errors").getJSONArray("tanggal").get(0).toString())
+//                    }
 
                     Toast.makeText(
                         this,
@@ -221,7 +206,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@ActivityAddEditHistory, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActivityAddEditBloodPressure, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -235,7 +220,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
                 @Throws(AuthFailureError::class)
                 override fun getBody(): ByteArray {
                     val gson = Gson()
-                    val requestBody = gson.toJson(history)
+                    val requestBody = gson.toJson(bloodPressure)
                     return requestBody.toByteArray(StandardCharsets.UTF_8)
                 }
 
@@ -251,24 +236,21 @@ class ActivityAddEditHistory : AppCompatActivity() {
         
     }
 
-    private fun updateHistory(id: Long, token: String){
+    private fun updateBloodPressure(id: Long, token: String){
         setLoading(true)
-        println("test" + itemBinding?.etBeratBadan?.text.toString().toFloatOrNull())
-        val history = History(
-            id,
-            etBeratBadan!!.text.toString().toFloat(),
-            edAktivitas!!.text.toString(),
-            etLamaLatihan!!.text.toString().toInt(),
-            etTanggal!!.text.toString(),
-            "null"
+        println("id :" + id)
+        val bloodPressure = BloodPressure(
+            etDatetime!!.text.toString(),
+            etSystolic!!.text.toString().toIntOrNull(),
+            etDiastolic!!.text.toString().toIntOrNull(),
         )
         val stringRequest: StringRequest =
-            object: StringRequest(Method.PUT, HistoryApi.UPDATE_URL + id, Response.Listener { response ->
+            object: StringRequest(Method.PUT, BloodPressureApi.UPDATE_URL + id, Response.Listener { response ->
                 val gson = Gson()
-                var history = gson.fromJson(response, History::class.java)
+                var bloodPressure = gson.fromJson(response, History::class.java)
 
-                if(history != null)
-                    Toast.makeText(this@ActivityAddEditHistory, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
+                if(bloodPressure != null)
+                    Toast.makeText(this@ActivityAddEditBloodPressure, "Data berhasil diubah", Toast.LENGTH_SHORT).show()
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -286,7 +268,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception){
-                    Toast.makeText(this@ActivityAddEditHistory, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActivityAddEditBloodPressure, e.message, Toast.LENGTH_SHORT).show()
                 }
             }){
                 @Throws(AuthFailureError::class)
@@ -300,7 +282,7 @@ class ActivityAddEditHistory : AppCompatActivity() {
                 @Throws(AuthFailureError::class)
                 override fun getBody(): ByteArray {
                     val gson = Gson()
-                    val requestBody = gson.toJson(history)
+                    val requestBody = gson.toJson(bloodPressure)
                     return requestBody.toByteArray(StandardCharsets.UTF_8)
                 }
 

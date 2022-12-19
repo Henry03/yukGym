@@ -164,8 +164,8 @@ class FragmentProfile : Fragment() {
                 val gson = Gson()
                 var history = gson.fromJson(response, Profile::class.java)
 
-                if(history != null)
-                    Toast.makeText(requireContext(), "Data berhasil diubah", Toast.LENGTH_SHORT).show()
+//                if(history != null)
+//                    Toast.makeText(requireContext(), "Fingerprint updated", Toast.LENGTH_SHORT).show()
 
             }, Response.ErrorListener { error ->
                 try{

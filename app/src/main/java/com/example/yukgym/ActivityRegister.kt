@@ -140,10 +140,7 @@ class ActivityRegister : AppCompatActivity() {
             createProfile()
             if(checkSignUp == true){
 
-                createNotificationChannel()
-                sendNotification()
-                Toast.makeText(applicationContext, itemBinding?.etName?.getText().toString() + " registered", Toast.LENGTH_SHORT).show()
-                startActivity(intent)
+
             }else{
                 return@OnClickListener
             }
@@ -187,10 +184,11 @@ class ActivityRegister : AppCompatActivity() {
                 var profile = gson.fromJson(response,Profile::class.java)
                 println(gson)
                 if(profile != null)
-                    Toast.makeText(this@ActivityRegister, "Register Successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActivityRegister, "Register Successfully, Check your inbox to verify", Toast.LENGTH_SHORT).show()
 
-                val returnIntent = Intent()
-                setResult(RESULT_OK, returnIntent)
+                createNotificationChannel()
+                sendNotification()
+                startActivity(Intent(this@ActivityRegister, ActivityLogin::class.java))
                 finish()
 
             }, Response.ErrorListener { error ->
@@ -320,10 +318,10 @@ class ActivityRegister : AppCompatActivity() {
             .addAction(R.mipmap.ic_launcher, "Access Class", actionIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        Toast.makeText(applicationContext, "Register with your new Account first", Toast.LENGTH_SHORT).show()
-        with(NotificationManagerCompat.from(this)){
-            notify(notificationId, builder.build())
-        }
+//        Toast.makeText(applicationContext, "Register with your new Account first", Toast.LENGTH_SHORT).show()
+//        with(NotificationManagerCompat.from(this)){
+//            notify(notificationId, builder.build())
+//        }
     }
 
 
